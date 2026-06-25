@@ -1,0 +1,96 @@
+{
+	"name": "df_bronze_establecimientos_salud",
+	"properties": {
+		"folder": {
+			"name": "bronze"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "bja_establecimientos_salud_csv",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "silver_establecimientos_salud",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          establecimiento_id as string,",
+				"          codigo_snis as string,",
+				"          nombre as string,",
+				"          tipo as string,",
+				"          nivel_atencion as string,",
+				"          municipio as string,",
+				"          departamento as string,",
+				"          red_salud as string,",
+				"          estado as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(establecimiento_id = establecimiento_id,",
+				"          codigo_snis = trim(codigo_snis),",
+				"          nombre_establecimiento = trim(replace(replace(replace(replace(replace(replace(nombre, 'Ã¡', 'á'), 'Ã©', 'é'), 'Ã­', 'í'), 'Ã³', 'ó'), 'Ãº', 'ú'), 'Ã±', 'ñ')),",
+				"          tipo = trim(tipo),",
+				"          nivel_atencion = trim(nivel_atencion),",
+				"          municipio = trim(replace(replace(replace(replace(replace(replace(municipio, 'Ã¡', 'á'), 'Ã©', 'é'), 'Ã­', 'í'), 'Ã³', 'ó'), 'Ãº', 'ú'), 'Ã±', 'ñ')),",
+				"          departamento = case(\r",
+				"    trim(departamento) == 'LP', 'La Paz',\r",
+				"    trim(departamento) == 'CB', 'Cochabamba',\r",
+				"    trim(departamento) == 'SC', 'Santa Cruz',\r",
+				"    trim(departamento) == 'OR', 'Oruro',\r",
+				"    trim(departamento) == 'PT', 'Potosí',\r",
+				"    trim(departamento) == 'TJ', 'Tarija',\r",
+				"    trim(departamento) == 'CH', 'Chuquisaca',\r",
+				"    trim(departamento) == 'BN', 'Beni',\r",
+				"    trim(departamento) == 'PD', 'Pando',\r",
+				"    trim(replace(replace(replace(replace(replace(replace(departamento, 'Ã¡', 'á'), 'Ã©', 'é'), 'Ã­', 'í'), 'Ã³', 'ó'), 'Ãº', 'ú'), 'Ã±', 'ñ'))\r",
+				"),",
+				"          red_salud = trim(replace(replace(replace(replace(replace(replace(red_salud, 'Ã¡', 'á'), 'Ã©', 'é'), 'Ã­', 'í'), 'Ã³', 'ó'), 'Ãº', 'ú'), 'Ã±', 'ñ')),",
+				"          estado = trim(estado)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          establecimiento_id as string,",
+				"          nombre_establecimiento as string,",
+				"          tipo_establecimiento as string,",
+				"          municipio as string,",
+				"          departamento as string,",
+				"          estado as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          establecimiento_id,",
+				"          nombre_establecimiento,",
+				"          tipo_establecimiento = tipo,",
+				"          municipio,",
+				"          departamento,",
+				"          estado",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
