@@ -1,0 +1,68 @@
+{
+	"name": "sup_entregas_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_datalake_subsidio",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "bronze"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "sup_entregas.csv",
+				"folderPath": "bronze",
+				"fileSystem": "subsidio-data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "entrega_id",
+				"type": "String"
+			},
+			{
+				"name": "boleta_id",
+				"type": "String"
+			},
+			{
+				"name": "ci_beneficiaria",
+				"type": "String"
+			},
+			{
+				"name": "establecimiento_id",
+				"type": "String"
+			},
+			{
+				"name": "paquete_id",
+				"type": "String"
+			},
+			{
+				"name": "paquete_nombre",
+				"type": "String"
+			},
+			{
+				"name": "fecha_entrega",
+				"type": "String"
+			},
+			{
+				"name": "lote_produccion",
+				"type": "String"
+			},
+			{
+				"name": "peso_paquete_kg",
+				"type": "String"
+			},
+			{
+				"name": "fecha_proxima_entrega",
+				"type": "String"
+			}
+		]
+	}
+}

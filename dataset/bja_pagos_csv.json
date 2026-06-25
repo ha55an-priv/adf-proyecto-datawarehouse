@@ -1,0 +1,60 @@
+{
+	"name": "bja_pagos_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_datalake_subsidio",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "bronze"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "bja_pagos.csv",
+				"folderPath": "bronze",
+				"fileSystem": "subsidio-data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "pago_id",
+				"type": "String"
+			},
+			{
+				"name": "ci_beneficiaria",
+				"type": "String"
+			},
+			{
+				"name": "concepto_pago",
+				"type": "String"
+			},
+			{
+				"name": "monto_bs",
+				"type": "String"
+			},
+			{
+				"name": "fecha_pago",
+				"type": "String"
+			},
+			{
+				"name": "estado_pago",
+				"type": "String"
+			},
+			{
+				"name": "canal_pago",
+				"type": "String"
+			},
+			{
+				"name": "nro_comprobante",
+				"type": "String"
+			}
+		]
+	}
+}
