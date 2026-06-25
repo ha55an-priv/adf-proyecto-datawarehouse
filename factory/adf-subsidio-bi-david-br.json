@@ -1,0 +1,10 @@
+{
+	"name": "adf-subsidio-bi-david-br",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "brazilsouth"
+}
