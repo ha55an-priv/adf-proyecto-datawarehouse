@@ -1,0 +1,90 @@
+{
+	"name": "df_bronze_partos",
+	"properties": {
+		"folder": {
+			"name": "bronze"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "bja_partos_csv",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "silver_partos",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          parto_id as string,",
+				"          ci_madre as string,",
+				"          ci_recien_nacido as string,",
+				"          establecimiento_id as string,",
+				"          fecha_parto as string,",
+				"          tipo_parto as string,",
+				"          peso_nacimiento_kg as string,",
+				"          talla_nacimiento_cm as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(parto_id = toString(parto_id),",
+				"          ci_madre = trim(ci_madre),",
+				"          ci_recien_nacido = trim(ci_recien_nacido),",
+				"          establecimiento_id = toInteger(establecimiento_id),",
+				"          fecha_parto = toDate(iif(instr(toString(fecha_parto), '/') > 0, toTimestamp(toString(fecha_parto), 'dd/MM/yyyy'), toTimestamp(toString(fecha_parto), 'yyyy-MM-dd'))),",
+				"          peso_nacimiento_kg = iif(isNull(peso_nacimiento_kg) || peso_nacimiento_kg == '', toDecimal(0, 5, 2), toDecimal(peso_nacimiento_kg, 5, 2)),",
+				"          talla_nacimiento_cm = iif(isNull(talla_nacimiento_cm) || talla_nacimiento_cm == '', toDecimal(0, 5, 2), toDecimal(talla_nacimiento_cm, 5, 2)),",
+				"          origen_sistema = 'BJA',",
+				"          tipo_parto = case(     isNull(tipo_parto) || trim(tipo_parto) == '', 'No Especificado',     regexMatch(lower(trim(tipo_parto)), '.*nat.*|.*ntur.*|.*naur.*'), 'Natural',     regexMatch(lower(trim(tipo_parto)), '.*ces.*|.*cse.*|.*ceá.*'), 'Cesárea',     'Otro' )) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          parto_id as string,",
+				"          ci_madre as string,",
+				"          ci_recien_nacido as string,",
+				"          establecimiento_id as integer,",
+				"          fecha_parto as date,",
+				"          tipo_parto as string,",
+				"          peso_nacimiento_kg as decimal(5,2),",
+				"          talla_nacimiento_cm as decimal(5,2),",
+				"          origen_sistema as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          parto_id,",
+				"          ci_madre,",
+				"          ci_recien_nacido,",
+				"          establecimiento_id,",
+				"          fecha_parto,",
+				"          tipo_parto,",
+				"          peso_nacimiento_kg,",
+				"          talla_nacimiento_cm,",
+				"          origen_sistema",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
