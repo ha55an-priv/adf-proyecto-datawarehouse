@@ -13,152 +13,195 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/silver_controles_pediatricos')]",
+			"name": "[concat(parameters('factoryName'), '/sup_entregas_csv')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "ls_sql_subsidio",
+					"referenceName": "ls_datalake_subsidio",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "silver"
+					"name": "bronze"
 				},
 				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "control_pediatrico_id",
-						"type": "varchar"
-					},
-					{
-						"name": "ci_nino",
-						"type": "varchar"
-					},
-					{
-						"name": "ci_madre",
-						"type": "varchar"
-					},
-					{
-						"name": "establecimiento_id",
-						"type": "varchar"
-					},
-					{
-						"name": "nro_control",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "fecha_control",
-						"type": "date"
-					},
-					{
-						"name": "peso_nino_kg",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 2
-					},
-					{
-						"name": "talla_nino_cm",
-						"type": "decimal",
-						"precision": 5,
-						"scale": 2
-					},
-					{
-						"name": "vacuna_aplicada",
-						"type": "varchar"
-					}
-				],
+				"type": "DelimitedText",
 				"typeProperties": {
-					"schema": "silver",
-					"table": "controles_pediatricos"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/silver_partos')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_sql_subsidio",
-					"type": "LinkedServiceReference"
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "sup_entregas.csv",
+						"folderPath": "bronze",
+						"fileSystem": "subsidio-data"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
 				},
-				"folder": {
-					"name": "silver"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"name": "parto_id",
-						"type": "varchar"
+						"name": "entrega_id",
+						"type": "String"
 					},
 					{
-						"name": "inscripcion_id",
-						"type": "varchar"
-					},
-					{
-						"name": "fecha_parto",
-						"type": "date"
-					},
-					{
-						"name": "tipo_parto",
-						"type": "varchar"
-					},
-					{
-						"name": "ci_hijo",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "silver",
-					"table": "partos"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/silver_inscripciones_programas')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_sql_subsidio",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "silver"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "inscripcion_id",
-						"type": "varchar"
+						"name": "boleta_id",
+						"type": "String"
 					},
 					{
 						"name": "ci_beneficiaria",
-						"type": "varchar"
+						"type": "String"
 					},
 					{
-						"name": "fecha_inscripcion",
-						"type": "date"
+						"name": "establecimiento_id",
+						"type": "String"
 					},
 					{
-						"name": "origen_sistema",
-						"type": "varchar"
+						"name": "paquete_id",
+						"type": "String"
+					},
+					{
+						"name": "paquete_nombre",
+						"type": "String"
+					},
+					{
+						"name": "fecha_entrega",
+						"type": "String"
+					},
+					{
+						"name": "lote_produccion",
+						"type": "String"
+					},
+					{
+						"name": "peso_paquete_kg",
+						"type": "String"
+					},
+					{
+						"name": "fecha_proxima_entrega",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sup_establecimientos_csv')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_datalake_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "sup_establecimientos.csv",
+						"folderPath": "bronze",
+						"fileSystem": "subsidio-data"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "establecimiento_id",
+						"type": "String"
+					},
+					{
+						"name": "codigo_snis",
+						"type": "String"
+					},
+					{
+						"name": "nombre",
+						"type": "String"
+					},
+					{
+						"name": "tipo",
+						"type": "String"
+					},
+					{
+						"name": "nivel_atencion",
+						"type": "String"
+					},
+					{
+						"name": "municipio",
+						"type": "String"
+					},
+					{
+						"name": "departamento",
+						"type": "String"
+					},
+					{
+						"name": "red_salud",
+						"type": "String"
 					},
 					{
 						"name": "estado",
-						"type": "varchar"
+						"type": "String"
 					}
-				],
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sup_inscripciones_csv')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_datalake_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
 				"typeProperties": {
-					"schema": "silver",
-					"table": "inscripciones_programas"
-				}
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "sup_inscripciones.csv",
+						"folderPath": "bronze",
+						"fileSystem": "subsidio-data"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "inscripcion_id",
+						"type": "String"
+					},
+					{
+						"name": "ci_beneficiaria",
+						"type": "String"
+					},
+					{
+						"name": "establecimiento_id",
+						"type": "String"
+					},
+					{
+						"name": "fecha_inscripcion",
+						"type": "String"
+					},
+					{
+						"name": "semana_gestacion",
+						"type": "String"
+					},
+					{
+						"name": "estado",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": []
 		},
@@ -232,6 +275,197 @@
 						"          nombre_paquete,",
 						"          contenido_detalle,",
 						"          costo_estimado_bs",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_bronze_controles_pediatricos')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "bronze"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "bja_controles_pediatricos_csv",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "bja_controles_pediatricos_csv",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          control_pediatrico_id as string,",
+						"          ci_nino as string,",
+						"          ci_madre as string,",
+						"          establecimiento_id as string,",
+						"          nro_control as string,",
+						"          fecha_control as string,",
+						"          peso_nino_kg as string,",
+						"          talla_nino_cm as string,",
+						"          vacuna_aplicada as string,",
+						"          resultado as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 derive(control_pediatrico_id = toString(control_pediatrico_id),",
+						"          ci_nino = trim(ci_nino),",
+						"          ci_madre = trim(ci_madre),",
+						"          establecimiento_id = toInteger(establecimiento_id),",
+						"          nro_control = toInteger(nro_control),",
+						"          fecha_control = toDate(iif(instr(toString(fecha_control), '/') > 0, toTimestamp(toString(fecha_control), 'MM/dd/yyyy'), toTimestamp(toString(fecha_control), 'yyyy-MM-dd'))),",
+						"          peso_nino_kg = iif(isNull(peso_nino_kg) || peso_nino_kg == '', toDecimal(0, 5, 2), toDecimal(peso_nino_kg, 5, 2)),",
+						"          talla_nino_cm = iif(isNull(talla_nino_cm) || talla_nino_cm == '', toDecimal(0, 5, 2), toDecimal(talla_nino_cm, 5, 2)),",
+						"          vacuna_aplicada = trim(vacuna_aplicada),",
+						"          resultado = trim(resultado),",
+						"          origen_sistema = 'BJA') ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          control_pediatrico_id as string,",
+						"          ci_nino as string,",
+						"          ci_madre as string,",
+						"          establecimiento_id as string,",
+						"          nro_control as string,",
+						"          fecha_control as string,",
+						"          peso_nino_kg as string,",
+						"          talla_nino_cm as string,",
+						"          vacuna_aplicada as string,",
+						"          resultado as string",
+						"     ),",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     mapColumn(",
+						"          control_pediatrico_id,",
+						"          ci_nino,",
+						"          ci_madre,",
+						"          establecimiento_id,",
+						"          nro_control,",
+						"          fecha_control,",
+						"          peso_nino_kg,",
+						"          talla_nino_cm,",
+						"          vacuna_aplicada,",
+						"          resultado",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_bronze_controles_prenatales')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "bronze"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "bja_controles_prenatales_csv",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "silver_controles_prenatales",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          control_prenatal_id as string,",
+						"          ci_beneficiaria as string,",
+						"          establecimiento_id as string,",
+						"          nro_control as string,",
+						"          fecha_control as string,",
+						"          semana_gestacion as string,",
+						"          peso_madre_kg as string,",
+						"          presion_arterial as string,",
+						"          resultado as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 derive(control_prenatal_id = toString(control_prenatal_id),",
+						"          ci_beneficiaria = trim(ci_beneficiaria),",
+						"          establecimiento_id = toString(establecimiento_id),",
+						"          nro_control = toInteger(nro_control),",
+						"          fecha_control = toDate(     iif(         instr(toString(fecha_control), '/') > 0,         toTimestamp(toString(fecha_control), 'dd/MM/yyyy'),         toTimestamp(toString(fecha_control), 'yyyy-MM-dd')     ) ),",
+						"          semana_gestacion = toInteger(semana_gestacion),",
+						"          peso_madre_kg = iif(isNull(peso_madre_kg) || peso_madre_kg == '', toDecimal(0, 5, 2), toDecimal(peso_madre_kg, 5, 2)),",
+						"          presion_arterial = trim(presion_arterial),",
+						"          origen_sistema = 'BJA',",
+						"          resultado = case(     isNull(resultado) || trim(resultado) == '', 'No Especificado',     regexMatch(lower(trim(resultado)), '.*norm.*|.*nomr.*|.*noor.*'), 'Normal',     regexMatch(lower(trim(resultado)), '.*mod.*'), 'Riesgo Moderado',     regexMatch(lower(trim(resultado)), '.*alt.*'), 'Riesgo Alto',     regexMatch(lower(trim(resultado)), '.*baj.*'), 'Riesgo Bajo',     'Otro' )) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          control_prenatal_id as string,",
+						"          ci_beneficiaria as string,",
+						"          establecimiento_id as string,",
+						"          nro_control as integer,",
+						"          fecha_control as date,",
+						"          semana_gestacion as integer,",
+						"          peso_madre_kg as decimal(5,2),",
+						"          presion_arterial as string,",
+						"          origen_sistema as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          control_prenatal_id,",
+						"          ci_beneficiaria,",
+						"          establecimiento_id,",
+						"          nro_control,",
+						"          fecha_control,",
+						"          semana_gestacion,",
+						"          peso_madre_kg,",
+						"          presion_arterial,",
+						"          origen_sistema",
 						"     )) ~> sink1"
 					]
 				}
@@ -331,6 +565,182 @@
 						"          municipio,",
 						"          departamento,",
 						"          estado",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_bronze_inscripciones_programas')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "bronze"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "sup_inscripciones_csv",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "silver_inscripciones_programas",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          inscripcion_id as string,",
+						"          ci_beneficiaria as string,",
+						"          establecimiento_id as string,",
+						"          fecha_inscripcion as string,",
+						"          semana_gestacion as string,",
+						"          estado as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 derive(inscripcion_id = toString(inscripcion_id),",
+						"          ci_beneficiaria = trim(ci_beneficiaria),",
+						"          establecimiento_id = toInteger(establecimiento_id),",
+						"          fecha_inscripcion = toDate(fecha_inscripcion, 'yyyy-MM-dd'),",
+						"          semana_gestacion = toInteger(semana_gestacion),",
+						"          estado = trim(estado),",
+						"          origen_sistema = 'SUBSIDIO') ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          inscripcion_id as string,",
+						"          ci_beneficiaria as string,",
+						"          fecha_inscripcion as date,",
+						"          origen_sistema as string,",
+						"          estado as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          inscripcion_id,",
+						"          ci_beneficiaria,",
+						"          fecha_inscripcion,",
+						"          origen_sistema,",
+						"          estado",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/sup_inscripciones_csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_bronze_partos')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "bronze"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "bja_partos_csv",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "silver_partos",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          parto_id as string,",
+						"          ci_madre as string,",
+						"          ci_recien_nacido as string,",
+						"          establecimiento_id as string,",
+						"          fecha_parto as string,",
+						"          tipo_parto as string,",
+						"          peso_nacimiento_kg as string,",
+						"          talla_nacimiento_cm as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 derive(parto_id = toString(parto_id),",
+						"          ci_madre = trim(ci_madre),",
+						"          ci_recien_nacido = trim(ci_recien_nacido),",
+						"          establecimiento_id = toInteger(establecimiento_id),",
+						"          fecha_parto = toDate(iif(instr(toString(fecha_parto), '/') > 0, toTimestamp(toString(fecha_parto), 'dd/MM/yyyy'), toTimestamp(toString(fecha_parto), 'yyyy-MM-dd'))),",
+						"          peso_nacimiento_kg = iif(isNull(peso_nacimiento_kg) || peso_nacimiento_kg == '', toDecimal(0, 5, 2), toDecimal(peso_nacimiento_kg, 5, 2)),",
+						"          talla_nacimiento_cm = iif(isNull(talla_nacimiento_cm) || talla_nacimiento_cm == '', toDecimal(0, 5, 2), toDecimal(talla_nacimiento_cm, 5, 2)),",
+						"          origen_sistema = 'BJA',",
+						"          tipo_parto = case(     isNull(tipo_parto) || trim(tipo_parto) == '', 'No Especificado',     regexMatch(lower(trim(tipo_parto)), '.*nat.*|.*ntur.*|.*naur.*'), 'Natural',     regexMatch(lower(trim(tipo_parto)), '.*ces.*|.*cse.*|.*ceá.*'), 'Cesárea',     'Otro' )) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          parto_id as string,",
+						"          ci_madre as string,",
+						"          ci_recien_nacido as string,",
+						"          establecimiento_id as integer,",
+						"          fecha_parto as date,",
+						"          tipo_parto as string,",
+						"          peso_nacimiento_kg as decimal(5,2),",
+						"          talla_nacimiento_cm as decimal(5,2),",
+						"          origen_sistema as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          parto_id,",
+						"          ci_madre,",
+						"          ci_recien_nacido,",
+						"          establecimiento_id,",
+						"          fecha_parto,",
+						"          tipo_parto,",
+						"          peso_nacimiento_kg,",
+						"          talla_nacimiento_cm,",
+						"          origen_sistema",
 						"     )) ~> sink1"
 					]
 				}
@@ -449,280 +859,6 @@
 						"          nivel_estudios,",
 						"          municipio_residencia,",
 						"          fecha_emision",
-						"     )) ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df_bronze_inscripciones_programas')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "bronze"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "sup_inscripciones_csv",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "silver_inscripciones_programas",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          inscripcion_id as string,",
-						"          ci_beneficiaria as string,",
-						"          establecimiento_id as string,",
-						"          fecha_inscripcion as string,",
-						"          semana_gestacion as string,",
-						"          estado as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> source1",
-						"source1 derive(inscripcion_id = toString(inscripcion_id),",
-						"          ci_beneficiaria = trim(ci_beneficiaria),",
-						"          establecimiento_id = toInteger(establecimiento_id),",
-						"          fecha_inscripcion = toDate(fecha_inscripcion, 'yyyy-MM-dd'),",
-						"          semana_gestacion = toInteger(semana_gestacion),",
-						"          estado = trim(estado),",
-						"          origen_sistema = 'SUBSIDIO') ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          inscripcion_id as string,",
-						"          ci_beneficiaria as string,",
-						"          fecha_inscripcion as date,",
-						"          origen_sistema as string,",
-						"          estado as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          inscripcion_id,",
-						"          ci_beneficiaria,",
-						"          fecha_inscripcion,",
-						"          origen_sistema,",
-						"          estado",
-						"     )) ~> sink1"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/silver_inscripciones_programas')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df_bronze_controles_prenatales')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "bronze"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "bja_controles_prenatales_csv",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "silver_controles_prenatales",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          control_prenatal_id as string,",
-						"          ci_beneficiaria as string,",
-						"          establecimiento_id as string,",
-						"          nro_control as string,",
-						"          fecha_control as string,",
-						"          semana_gestacion as string,",
-						"          peso_madre_kg as string,",
-						"          presion_arterial as string,",
-						"          resultado as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> source1",
-						"source1 derive(control_prenatal_id = toString(control_prenatal_id),",
-						"          ci_beneficiaria = trim(ci_beneficiaria),",
-						"          establecimiento_id = toString(establecimiento_id),",
-						"          nro_control = toInteger(nro_control),",
-						"          fecha_control = toDate(     iif(         instr(toString(fecha_control), '/') > 0,         toTimestamp(toString(fecha_control), 'dd/MM/yyyy'),         toTimestamp(toString(fecha_control), 'yyyy-MM-dd')     ) ),",
-						"          semana_gestacion = toInteger(semana_gestacion),",
-						"          peso_madre_kg = iif(isNull(peso_madre_kg) || peso_madre_kg == '', toDecimal(0, 5, 2), toDecimal(peso_madre_kg, 5, 2)),",
-						"          presion_arterial = trim(presion_arterial),",
-						"          origen_sistema = 'BJA',",
-						"          resultado = case(     isNull(resultado) || trim(resultado) == '', 'No Especificado',     regexMatch(lower(trim(resultado)), '.*norm.*|.*nomr.*|.*noor.*'), 'Normal',     regexMatch(lower(trim(resultado)), '.*mod.*'), 'Riesgo Moderado',     regexMatch(lower(trim(resultado)), '.*alt.*'), 'Riesgo Alto',     regexMatch(lower(trim(resultado)), '.*baj.*'), 'Riesgo Bajo',     'Otro' )) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          control_prenatal_id as string,",
-						"          ci_beneficiaria as string,",
-						"          establecimiento_id as string,",
-						"          nro_control as integer,",
-						"          fecha_control as date,",
-						"          semana_gestacion as integer,",
-						"          peso_madre_kg as decimal(5,2),",
-						"          presion_arterial as string,",
-						"          origen_sistema as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          control_prenatal_id,",
-						"          ci_beneficiaria,",
-						"          establecimiento_id,",
-						"          nro_control,",
-						"          fecha_control,",
-						"          semana_gestacion,",
-						"          peso_madre_kg,",
-						"          presion_arterial,",
-						"          origen_sistema",
-						"     )) ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df_bronze_controles_pediatricos')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "bronze"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "bja_controles_pediatricos_csv",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "bja_controles_pediatricos_csv",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          control_pediatrico_id as string,",
-						"          ci_nino as string,",
-						"          ci_madre as string,",
-						"          establecimiento_id as string,",
-						"          nro_control as string,",
-						"          fecha_control as string,",
-						"          peso_nino_kg as string,",
-						"          talla_nino_cm as string,",
-						"          vacuna_aplicada as string,",
-						"          resultado as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> source1",
-						"source1 derive(control_pediatrico_id = toString(control_pediatrico_id),",
-						"          ci_nino = trim(ci_nino),",
-						"          ci_madre = trim(ci_madre),",
-						"          establecimiento_id = toInteger(establecimiento_id),",
-						"          nro_control = toInteger(nro_control),",
-						"          fecha_control = toDate(iif(instr(toString(fecha_control), '/') > 0, toTimestamp(toString(fecha_control), 'MM/dd/yyyy'), toTimestamp(toString(fecha_control), 'yyyy-MM-dd'))),",
-						"          peso_nino_kg = iif(isNull(peso_nino_kg) || peso_nino_kg == '', toDecimal(0, 5, 2), toDecimal(peso_nino_kg, 5, 2)),",
-						"          talla_nino_cm = iif(isNull(talla_nino_cm) || talla_nino_cm == '', toDecimal(0, 5, 2), toDecimal(talla_nino_cm, 5, 2)),",
-						"          vacuna_aplicada = trim(vacuna_aplicada),",
-						"          resultado = trim(resultado),",
-						"          origen_sistema = 'BJA') ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          control_pediatrico_id as string,",
-						"          ci_nino as string,",
-						"          ci_madre as string,",
-						"          establecimiento_id as string,",
-						"          nro_control as string,",
-						"          fecha_control as string,",
-						"          peso_nino_kg as string,",
-						"          talla_nino_cm as string,",
-						"          vacuna_aplicada as string,",
-						"          resultado as string",
-						"     ),",
-						"     umask: 0022,",
-						"     preCommands: [],",
-						"     postCommands: [],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     mapColumn(",
-						"          control_pediatrico_id,",
-						"          ci_nino,",
-						"          ci_madre,",
-						"          establecimiento_id,",
-						"          nro_control,",
-						"          fecha_control,",
-						"          peso_nino_kg,",
-						"          talla_nino_cm,",
-						"          vacuna_aplicada,",
-						"          resultado",
 						"     )) ~> sink1"
 					]
 				}
