@@ -1,0 +1,40 @@
+{
+	"name": "silver_partos",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_subsidio",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "silver"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "parto_id",
+				"type": "varchar"
+			},
+			{
+				"name": "inscripcion_id",
+				"type": "varchar"
+			},
+			{
+				"name": "fecha_parto",
+				"type": "date"
+			},
+			{
+				"name": "tipo_parto",
+				"type": "varchar"
+			},
+			{
+				"name": "ci_hijo",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "silver",
+			"table": "partos"
+		}
+	}
+}
