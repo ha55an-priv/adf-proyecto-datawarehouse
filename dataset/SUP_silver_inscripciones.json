@@ -20,8 +20,17 @@
 				"type": "varchar"
 			},
 			{
+				"name": "establecimiento_id",
+				"type": "varchar"
+			},
+			{
 				"name": "fecha_inscripcion",
 				"type": "date"
+			},
+			{
+				"name": "semana_gestacion",
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "estado_inscripcion",

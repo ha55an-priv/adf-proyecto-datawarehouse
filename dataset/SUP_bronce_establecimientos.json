@@ -12,28 +12,45 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
 				"name": "establecimiento_id",
-				"type": "nvarchar"
+				"type": "varchar"
+			},
+			{
+				"name": "codigo_snis",
+				"type": "varchar"
 			},
 			{
 				"name": "nombre",
-				"type": "nvarchar"
+				"type": "varchar"
 			},
 			{
 				"name": "tipo",
-				"type": "nvarchar"
+				"type": "varchar"
 			},
 			{
-				"name": "departamento",
-				"type": "nvarchar"
+				"name": "nivel_atencion",
+				"type": "varchar"
 			},
 			{
 				"name": "municipio",
-				"type": "nvarchar"
+				"type": "varchar"
+			},
+			{
+				"name": "departamento",
+				"type": "varchar"
+			},
+			{
+				"name": "red_salud",
+				"type": "varchar"
 			},
 			{
 				"name": "estado",
-				"type": "nvarchar"
+				"type": "varchar"
 			}
 		],
 		"typeProperties": {
