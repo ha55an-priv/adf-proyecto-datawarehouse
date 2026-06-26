@@ -1,0 +1,40 @@
+{
+	"name": "SUP_bronce_catalogo_paquetes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_subsidio",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "bronze"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "paquete_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "nombre",
+				"type": "nvarchar"
+			},
+			{
+				"name": "contenido",
+				"type": "nvarchar"
+			},
+			{
+				"name": "peso_estandar_kg",
+				"type": "nvarchar"
+			},
+			{
+				"name": "costo_estimado_bs",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "bronze",
+			"table": "sup_catalogo_paquetes"
+		}
+	}
+}
