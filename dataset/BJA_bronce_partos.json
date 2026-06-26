@@ -35,6 +35,18 @@
 			{
 				"name": "fecha_parto",
 				"type": "varchar"
+			},
+			{
+				"name": "tipo_parto",
+				"type": "varchar"
+			},
+			{
+				"name": "peso_nacimiento_kg",
+				"type": "varchar"
+			},
+			{
+				"name": "talla_nacimiento_cm",
+				"type": "varchar"
 			}
 		],
 		"typeProperties": {
