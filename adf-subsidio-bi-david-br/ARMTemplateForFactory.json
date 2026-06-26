@@ -37,6 +37,1003 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/BJA_bronce_controles_pediatricos')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "control_pediatrico_id",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_nino",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_madre",
+						"type": "varchar"
+					},
+					{
+						"name": "establecimiento_id",
+						"type": "varchar"
+					},
+					{
+						"name": "nro_control",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_control",
+						"type": "varchar"
+					},
+					{
+						"name": "peso_nino_kg",
+						"type": "varchar"
+					},
+					{
+						"name": "talla_nino_cm",
+						"type": "varchar"
+					},
+					{
+						"name": "vacuna_aplicada",
+						"type": "varchar"
+					},
+					{
+						"name": "resultado",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "bja_controles_pediatricos"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BJA_bronce_controles_prenatales')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "control_prenatal_id",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_madre",
+						"type": "varchar"
+					},
+					{
+						"name": "establecimiento_id",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_control",
+						"type": "varchar"
+					},
+					{
+						"name": "semana_gestacion",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "bja_controles_prenatales"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BJA_bronce_establecimientos_salud')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "establecimiento_id",
+						"type": "varchar"
+					},
+					{
+						"name": "codigo_snis",
+						"type": "varchar"
+					},
+					{
+						"name": "nombre",
+						"type": "varchar"
+					},
+					{
+						"name": "tipo",
+						"type": "varchar"
+					},
+					{
+						"name": "nivel_atencion",
+						"type": "varchar"
+					},
+					{
+						"name": "municipio",
+						"type": "varchar"
+					},
+					{
+						"name": "departamento",
+						"type": "varchar"
+					},
+					{
+						"name": "red_salud",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "bja_establecimientos_salud"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BJA_bronce_inscripciones')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "inscripcion_id",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_madre",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_inscripcion",
+						"type": "varchar"
+					},
+					{
+						"name": "establecimiento_id",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "bja_inscripciones"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BJA_bronce_pagos')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "pago_id",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_madre",
+						"type": "varchar"
+					},
+					{
+						"name": "monto",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_pago",
+						"type": "varchar"
+					},
+					{
+						"name": "banco",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "bja_pagos"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BJA_bronce_partos')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "parto_id",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_madre",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_recien_nacido",
+						"type": "varchar"
+					},
+					{
+						"name": "establecimiento_id",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_parto",
+						"type": "varchar"
+					},
+					{
+						"name": "tipo_parto",
+						"type": "varchar"
+					},
+					{
+						"name": "peso_nacimiento_kg",
+						"type": "varchar"
+					},
+					{
+						"name": "talla_nacimiento_cm",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "bja_partos"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BJA_silver_controles_pediatricos')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "silver"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "control_pediatrico_id",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_madre",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_recien_nacido",
+						"type": "varchar"
+					},
+					{
+						"name": "establecimiento_id",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_control",
+						"type": "date"
+					},
+					{
+						"name": "peso",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 2
+					},
+					{
+						"name": "talla",
+						"type": "decimal",
+						"precision": 5,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "silver",
+					"table": "bja_controles_pediatricos"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BJA_silver_controles_prenatales')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "silver"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "control_prenatal_id",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_madre",
+						"type": "varchar"
+					},
+					{
+						"name": "establecimiento_id",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_control",
+						"type": "date"
+					},
+					{
+						"name": "semana_gestacion",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "silver",
+					"table": "bja_controles_prenatales"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BJA_silver_establecimientos_salud')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "silver"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "establecimiento_id",
+						"type": "varchar"
+					},
+					{
+						"name": "codigo_snis",
+						"type": "varchar"
+					},
+					{
+						"name": "nombre",
+						"type": "varchar"
+					},
+					{
+						"name": "tipo",
+						"type": "varchar"
+					},
+					{
+						"name": "nivel_atencion",
+						"type": "varchar"
+					},
+					{
+						"name": "municipio",
+						"type": "varchar"
+					},
+					{
+						"name": "departamento",
+						"type": "varchar"
+					},
+					{
+						"name": "red_salud",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "silver",
+					"table": "bja_establecimientos_salud"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BJA_silver_inscripciones')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "silver"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "inscripcion_id",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_madre",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_inscripcion",
+						"type": "date"
+					},
+					{
+						"name": "establecimiento_id",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "silver",
+					"table": "bja_inscripciones"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BJA_silver_pagos')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "silver"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "pago_id",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_madre",
+						"type": "varchar"
+					},
+					{
+						"name": "monto",
+						"type": "decimal",
+						"precision": 10,
+						"scale": 2
+					},
+					{
+						"name": "fecha_pago",
+						"type": "date"
+					},
+					{
+						"name": "banco",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "silver",
+					"table": "bja_pagos"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BJA_silver_partos')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "silver"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "parto_id",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_madre",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_recien_nacido",
+						"type": "varchar"
+					},
+					{
+						"name": "establecimiento_id",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_parto",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"schema": "silver",
+					"table": "bja_partos"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SEGIP_bronce')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ci",
+						"type": "varchar"
+					},
+					{
+						"name": "nombre",
+						"type": "varchar"
+					},
+					{
+						"name": "paterno",
+						"type": "varchar"
+					},
+					{
+						"name": "materno",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_nacimiento",
+						"type": "varchar"
+					},
+					{
+						"name": "genero",
+						"type": "varchar"
+					},
+					{
+						"name": "estado_civil",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "segip"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SUP_bronce_boletas')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ci_beneficiaria",
+						"type": "nvarchar"
+					},
+					{
+						"name": "fecha_emision",
+						"type": "nvarchar"
+					},
+					{
+						"name": "trimestre_gestacion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "estado",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "sup_boletas"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SUP_bronce_catalogo_paquetes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "paquete_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "nombre",
+						"type": "nvarchar"
+					},
+					{
+						"name": "contenido",
+						"type": "nvarchar"
+					},
+					{
+						"name": "peso_estandar_kg",
+						"type": "nvarchar"
+					},
+					{
+						"name": "costo_estimado_bs",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "sup_catalogo_paquetes"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SUP_bronce_controles')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "control_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ci_beneficiaria",
+						"type": "nvarchar"
+					},
+					{
+						"name": "establecimiento_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "nro_control",
+						"type": "nvarchar"
+					},
+					{
+						"name": "fecha_control",
+						"type": "nvarchar"
+					},
+					{
+						"name": "semana_gestacion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "peso_madre_kg",
+						"type": "nvarchar"
+					},
+					{
+						"name": "presion_arterial",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "sup_controles"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SUP_bronce_entregas')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "entrega_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "boleta_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ci_beneficiaria",
+						"type": "nvarchar"
+					},
+					{
+						"name": "paquete_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "establecimiento_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "fecha_entrega",
+						"type": "nvarchar"
+					},
+					{
+						"name": "mes_entrega",
+						"type": "nvarchar"
+					},
+					{
+						"name": "estado",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "sup_entregas"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SUP_bronce_establecimientos')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "establecimiento_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "nombre",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tipo",
+						"type": "nvarchar"
+					},
+					{
+						"name": "departamento",
+						"type": "nvarchar"
+					},
+					{
+						"name": "municipio",
+						"type": "nvarchar"
+					},
+					{
+						"name": "estado",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "sup_establecimientos"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SUP_bronce_inscripciones')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "inscripcion_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ci_beneficiaria",
+						"type": "nvarchar"
+					},
+					{
+						"name": "fecha_inscripcion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "establecimiento_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "estado_embarazo",
+						"type": "nvarchar"
+					},
+					{
+						"name": "mes_gestacion_ingreso",
+						"type": "nvarchar"
+					},
+					{
+						"name": "estado",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "sup_inscripciones"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/bja_controles_pediatricos_csv')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -941,319 +1938,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/BJA_bronce_controles_pediatricos')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_sql_subsidio",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "bronze"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "control_pediatrico_id",
-						"type": "varchar"
-					},
-					{
-						"name": "ci_madre",
-						"type": "varchar"
-					},
-					{
-						"name": "ci_recien_nacido",
-						"type": "varchar"
-					},
-					{
-						"name": "establecimiento_id",
-						"type": "varchar"
-					},
-					{
-						"name": "fecha_control",
-						"type": "varchar"
-					},
-					{
-						"name": "peso",
-						"type": "varchar"
-					},
-					{
-						"name": "talla",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "bronze",
-					"table": "bja_controles_pediatricos"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/BJA_bronce_controles_prenatales')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_sql_subsidio",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "bronze"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "control_prenatal_id",
-						"type": "varchar"
-					},
-					{
-						"name": "ci_madre",
-						"type": "varchar"
-					},
-					{
-						"name": "establecimiento_id",
-						"type": "varchar"
-					},
-					{
-						"name": "fecha_control",
-						"type": "varchar"
-					},
-					{
-						"name": "semana_gestacion",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "bronze",
-					"table": "bja_controles_prenatales"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/BJA_bronce_partos')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_sql_subsidio",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "bronze"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "parto_id",
-						"type": "varchar"
-					},
-					{
-						"name": "ci_madre",
-						"type": "varchar"
-					},
-					{
-						"name": "ci_recien_nacido",
-						"type": "varchar"
-					},
-					{
-						"name": "establecimiento_id",
-						"type": "varchar"
-					},
-					{
-						"name": "fecha_parto",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "bronze",
-					"table": "bja_partos"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/BJA_bronce_pagos')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_sql_subsidio",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "bronze"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "pago_id",
-						"type": "varchar"
-					},
-					{
-						"name": "ci_madre",
-						"type": "varchar"
-					},
-					{
-						"name": "monto",
-						"type": "varchar"
-					},
-					{
-						"name": "fecha_pago",
-						"type": "varchar"
-					},
-					{
-						"name": "banco",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "bronze",
-					"table": "bja_pagos"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/BJA_bronce_establecimientos_salud')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_sql_subsidio",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "bronze"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "establecimiento_id",
-						"type": "varchar"
-					},
-					{
-						"name": "codigo_snis",
-						"type": "varchar"
-					},
-					{
-						"name": "nombre",
-						"type": "varchar"
-					},
-					{
-						"name": "tipo",
-						"type": "varchar"
-					},
-					{
-						"name": "nivel_atencion",
-						"type": "varchar"
-					},
-					{
-						"name": "municipio",
-						"type": "varchar"
-					},
-					{
-						"name": "departamento",
-						"type": "varchar"
-					},
-					{
-						"name": "red_salud",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "bronze",
-					"table": "bja_establecimientos_salud"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/BJA_bronce_inscripciones')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_sql_subsidio",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "inscripcion_id",
-						"type": "varchar"
-					},
-					{
-						"name": "ci_madre",
-						"type": "varchar"
-					},
-					{
-						"name": "fecha_inscripcion",
-						"type": "varchar"
-					},
-					{
-						"name": "establecimiento_id",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "bronze",
-					"table": "bja_inscripciones"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/df_bronce_bja')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -1438,12 +2122,15 @@
 						"     input(",
 						"          id as integer,",
 						"          control_pediatrico_id as string,",
+						"          ci_nino as string,",
 						"          ci_madre as string,",
-						"          ci_recien_nacido as string,",
 						"          establecimiento_id as string,",
+						"          nro_control as string,",
 						"          fecha_control as string,",
-						"          peso as string,",
-						"          talla as string",
+						"          peso_nino_kg as string,",
+						"          talla_nino_cm as string,",
+						"          vacuna_aplicada as string,",
+						"          resultado as string",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -1479,7 +2166,10 @@
 						"          ci_madre as string,",
 						"          ci_recien_nacido as string,",
 						"          establecimiento_id as string,",
-						"          fecha_parto as string",
+						"          fecha_parto as string,",
+						"          tipo_parto as string,",
+						"          peso_nacimiento_kg as string,",
+						"          talla_nacimiento_cm as string",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -1561,6 +2251,706 @@
 				"[concat(variables('factoryId'), '/datasets/BJA_bronce_pagos')]",
 				"[concat(variables('factoryId'), '/datasets/BJA_bronce_establecimientos_salud')]",
 				"[concat(variables('factoryId'), '/datasets/BJA_bronce_inscripciones')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_bronce_segip')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "bronze"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "segip_csv",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SEGIP_bronce",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          ci as string,",
+						"          nombres as string,",
+						"          apellido_paterno as string,",
+						"          apellido_materno as string,",
+						"          fecha_nacimiento as string,",
+						"          genero as string,",
+						"          estado_civil as string,",
+						"          ci_conyuge as string,",
+						"          numero_hijos as string,",
+						"          ci_padre as string,",
+						"          ci_madre as string,",
+						"          profesion as string,",
+						"          nivel_estudios as string,",
+						"          municipio_residencia as string,",
+						"          fecha_emision as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          id as integer,",
+						"          ci as string,",
+						"          nombre as string,",
+						"          paterno as string,",
+						"          materno as string,",
+						"          fecha_nacimiento as string,",
+						"          genero as string,",
+						"          estado_civil as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/segip_csv')]",
+				"[concat(variables('factoryId'), '/datasets/SEGIP_bronce')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_bronce_sup')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "bronze"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "sup_boletas_csv",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "sup_catalogo_paquetes_csv",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						},
+						{
+							"dataset": {
+								"referenceName": "sup_controles_csv",
+								"type": "DatasetReference"
+							},
+							"name": "source3"
+						},
+						{
+							"dataset": {
+								"referenceName": "sup_entregas_csv",
+								"type": "DatasetReference"
+							},
+							"name": "source4"
+						},
+						{
+							"dataset": {
+								"referenceName": "sup_inscripciones_csv",
+								"type": "DatasetReference"
+							},
+							"name": "source5"
+						},
+						{
+							"dataset": {
+								"referenceName": "sup_establecimientos_csv",
+								"type": "DatasetReference"
+							},
+							"name": "source6"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SUP_bronce_boletas",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						},
+						{
+							"dataset": {
+								"referenceName": "SUP_bronce_catalogo_paquetes",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						},
+						{
+							"dataset": {
+								"referenceName": "SUP_bronce_controles",
+								"type": "DatasetReference"
+							},
+							"name": "sink3"
+						},
+						{
+							"dataset": {
+								"referenceName": "SUP_bronce_establecimientos",
+								"type": "DatasetReference"
+							},
+							"name": "sink4"
+						},
+						{
+							"dataset": {
+								"referenceName": "SUP_bronce_inscripciones",
+								"type": "DatasetReference"
+							},
+							"name": "sink5"
+						},
+						{
+							"dataset": {
+								"referenceName": "SUP_bronce_establecimientos",
+								"type": "DatasetReference"
+							},
+							"name": "sink6"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          boleta_id as string,",
+						"          control_id as string,",
+						"          ci_beneficiaria as string,",
+						"          nro_boleta as string,",
+						"          fecha_emision as string,",
+						"          estado as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source(output(",
+						"          paquete_id as string,",
+						"          nombre as string,",
+						"          contenido as string,",
+						"          peso_estandar_kg as string,",
+						"          costo_estimado_bs as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source2",
+						"source(output(",
+						"          control_id as string,",
+						"          ci_beneficiaria as string,",
+						"          establecimiento_id as string,",
+						"          nro_control as string,",
+						"          fecha_control as string,",
+						"          semana_gestacion as string,",
+						"          peso_madre_kg as string,",
+						"          presion_arterial as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source3",
+						"source(output(",
+						"          entrega_id as string,",
+						"          boleta_id as string,",
+						"          ci_beneficiaria as string,",
+						"          establecimiento_id as string,",
+						"          paquete_id as string,",
+						"          paquete_nombre as string,",
+						"          fecha_entrega as string,",
+						"          lote_produccion as string,",
+						"          peso_paquete_kg as string,",
+						"          fecha_proxima_entrega as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source4",
+						"source(output(",
+						"          inscripcion_id as string,",
+						"          ci_beneficiaria as string,",
+						"          establecimiento_id as string,",
+						"          fecha_inscripcion as string,",
+						"          semana_gestacion as string,",
+						"          estado as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source5",
+						"source(output(",
+						"          establecimiento_id as string,",
+						"          codigo_snis as string,",
+						"          nombre as string,",
+						"          tipo as string,",
+						"          nivel_atencion as string,",
+						"          municipio as string,",
+						"          departamento as string,",
+						"          red_salud as string,",
+						"          estado as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source6",
+						"source1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          id as string,",
+						"          ci_beneficiaria as string,",
+						"          fecha_emision as string,",
+						"          trimestre_gestacion as string,",
+						"          estado as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+						"source2 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          paquete_id as string,",
+						"          nombre as string,",
+						"          contenido as string,",
+						"          peso_estandar_kg as string,",
+						"          costo_estimado_bs as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink2",
+						"source3 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          control_id as string,",
+						"          ci_beneficiaria as string,",
+						"          establecimiento_id as string,",
+						"          nro_control as string,",
+						"          fecha_control as string,",
+						"          semana_gestacion as string,",
+						"          peso_madre_kg as string,",
+						"          presion_arterial as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink3",
+						"source4 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          establecimiento_id as string,",
+						"          nombre as string,",
+						"          tipo as string,",
+						"          departamento as string,",
+						"          municipio as string,",
+						"          estado as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink4",
+						"source5 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          inscripcion_id as string,",
+						"          ci_beneficiaria as string,",
+						"          fecha_inscripcion as string,",
+						"          establecimiento_id as string,",
+						"          estado_embarazo as string,",
+						"          mes_gestacion_ingreso as string,",
+						"          estado as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink5",
+						"source6 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          establecimiento_id as string,",
+						"          nombre as string,",
+						"          tipo as string,",
+						"          departamento as string,",
+						"          municipio as string,",
+						"          estado as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink6"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/sup_boletas_csv')]",
+				"[concat(variables('factoryId'), '/datasets/sup_catalogo_paquetes_csv')]",
+				"[concat(variables('factoryId'), '/datasets/sup_controles_csv')]",
+				"[concat(variables('factoryId'), '/datasets/sup_entregas_csv')]",
+				"[concat(variables('factoryId'), '/datasets/sup_inscripciones_csv')]",
+				"[concat(variables('factoryId'), '/datasets/sup_establecimientos_csv')]",
+				"[concat(variables('factoryId'), '/datasets/SUP_bronce_boletas')]",
+				"[concat(variables('factoryId'), '/datasets/SUP_bronce_catalogo_paquetes')]",
+				"[concat(variables('factoryId'), '/datasets/SUP_bronce_controles')]",
+				"[concat(variables('factoryId'), '/datasets/SUP_bronce_establecimientos')]",
+				"[concat(variables('factoryId'), '/datasets/SUP_bronce_inscripciones')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_silver_bja_partos')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "silver"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "BJA_bronce_partos",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "BJA_silver_partos",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "limpiezaSilver"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          id as integer,",
+						"          parto_id as string,",
+						"          ci_madre as string,",
+						"          ci_recien_nacido as string,",
+						"          establecimiento_id as string,",
+						"          fecha_parto as string,",
+						"          tipo_parto as string,",
+						"          peso_nacimiento_kg as string,",
+						"          talla_nacimiento_cm as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(parto_id = parto_id,",
+						"          ci_madre = ci_madre,",
+						"          ci_recien_nacido = ci_recien_nacido,",
+						"          establecimiento_id = establecimiento_id,",
+						"          fecha_parto = toDate(fecha_parto, 'yyyy-MM-dd'),",
+						"          tipo_parto = iif(isNull(tipo_parto), 'No Registrado', iif(in(['Cesárea', 'Cessárea', 'cesarea'], tipo_parto), 'Cesárea', iif(in(['Natural', 'Nattural', 'natural'], tipo_parto), 'Natural', tipo_parto))),",
+						"          peso_nacimiento_kg = iif(toDecimal(peso_nacimiento_kg, 5, 2) > 10.0, toDecimal(peso_nacimiento_kg, 5, 2) / 10.0, toDecimal(peso_nacimiento_kg, 5, 2)),",
+						"          talla_nacimiento_cm = iif(isNull(talla_nacimiento_cm), toDecimal(0.0, 5, 2), toDecimal(talla_nacimiento_cm, 5, 2))) ~> limpiezaSilver",
+						"limpiezaSilver sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          parto_id as string,",
+						"          ci_madre as string,",
+						"          ci_recien_nacido as string,",
+						"          establecimiento_id as string,",
+						"          fecha_parto as date",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/BJA_bronce_partos')]",
+				"[concat(variables('factoryId'), '/datasets/BJA_silver_partos')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_silver_bja_controles_pediatricos')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "silver"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "BJA_bronce_controles_pediatricos",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "BJA_silver_controles_pediatricos",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          id as integer,",
+						"          control_pediatrico_id as string,",
+						"          ci_nino as string,",
+						"          ci_madre as string,",
+						"          establecimiento_id as string,",
+						"          nro_control as string,",
+						"          fecha_control as string,",
+						"          peso_nino_kg as string,",
+						"          talla_nino_cm as string,",
+						"          vacuna_aplicada as string,",
+						"          resultado as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(fecha_control = toDate(fecha_control, 'yyyy-MM-dd'),",
+						"          peso_nino_kg = toDecimal(iif(isNull(peso_nino_kg), '0.00', toString(peso_nino_kg)), 5, 2),",
+						"          talla_nino_cm = toDecimal(talla_nino_cm, 5, 2),",
+						"          vacuna_aplicada = iif(isNull(vacuna_aplicada), 'Ninguna', vacuna_aplicada),",
+						"          resultado = iif(isNull(resultado), 'Sin Observaciones', resultado)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          control_pediatrico_id as string,",
+						"          ci_madre as string,",
+						"          ci_recien_nacido as string,",
+						"          establecimiento_id as string,",
+						"          fecha_control as date,",
+						"          peso as decimal(5,2),",
+						"          talla as decimal(5,2)",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/BJA_bronce_controles_pediatricos')]",
+				"[concat(variables('factoryId'), '/datasets/BJA_silver_controles_pediatricos')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_silver_bja_controles_prenatales')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "silver"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "BJA_bronce_controles_prenatales",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "BJA_silver_controles_prenatales",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          id as integer,",
+						"          control_prenatal_id as string,",
+						"          ci_madre as string,",
+						"          establecimiento_id as string,",
+						"          fecha_control as string,",
+						"          semana_gestacion as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(fecha_control = iif(instr(fecha_control, '-') == 5, toDate(fecha_control, 'yyyy-MM-dd'), toDate(fecha_control, 'dd-MM-yyyy')),",
+						"          semana_gestacion = toInteger(semana_gestacion)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          control_prenatal_id as string,",
+						"          ci_madre as string,",
+						"          establecimiento_id as string,",
+						"          fecha_control as date,",
+						"          semana_gestacion as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/BJA_bronce_controles_prenatales')]",
+				"[concat(variables('factoryId'), '/datasets/BJA_silver_controles_prenatales')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_silver_bja_establecimientos_salud')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "silver"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "BJA_bronce_establecimientos_salud",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "BJA_silver_establecimientos_salud",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          id as integer,",
+						"          establecimiento_id as string,",
+						"          codigo_snis as string,",
+						"          nombre as string,",
+						"          tipo as string,",
+						"          nivel_atencion as string,",
+						"          municipio as string,",
+						"          departamento as string,",
+						"          red_salud as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(nombre = iif(isNull(nombre) || nombre == '', 'Sin Nombre', trim(nombre)),",
+						"          codigo_snis = iif(isNull(codigo_snis), 'S/N', trim(codigo_snis)),",
+						"          tipo = iif(isNull(tipo), 'No Especificado', trim(tipo)),",
+						"          nivel_atencion = iif(isNull(nivel_atencion), 'No Especificado', trim(nivel_atencion)),",
+						"          municipio = iif(isNull(municipio), 'No Especificado', trim(municipio)),",
+						"          departamento = iif(isNull(departamento), 'No Especificado', trim(departamento)),",
+						"          red_salud = iif(isNull(red_salud), 'No Especificado', trim(red_salud))) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          establecimiento_id as string,",
+						"          codigo_snis as string,",
+						"          nombre as string,",
+						"          tipo as string,",
+						"          nivel_atencion as string,",
+						"          municipio as string,",
+						"          departamento as string,",
+						"          red_salud as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/BJA_bronce_establecimientos_salud')]",
+				"[concat(variables('factoryId'), '/datasets/BJA_silver_establecimientos_salud')]"
 			]
 		}
 	]
