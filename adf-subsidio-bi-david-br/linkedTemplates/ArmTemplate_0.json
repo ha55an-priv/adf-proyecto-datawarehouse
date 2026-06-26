@@ -749,6 +749,92 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/BJA_silver_segip')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "silver"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ci",
+						"type": "varchar"
+					},
+					{
+						"name": "nombres",
+						"type": "varchar"
+					},
+					{
+						"name": "apellido_paterno",
+						"type": "varchar"
+					},
+					{
+						"name": "apellido_materno",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_nacimiento",
+						"type": "date"
+					},
+					{
+						"name": "genero",
+						"type": "varchar"
+					},
+					{
+						"name": "estado_civil",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_conyuge",
+						"type": "varchar"
+					},
+					{
+						"name": "numero_hijos",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ci_padre",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_madre",
+						"type": "varchar"
+					},
+					{
+						"name": "profesion",
+						"type": "varchar"
+					},
+					{
+						"name": "nivel_estudios",
+						"type": "varchar"
+					},
+					{
+						"name": "municipio_residencia",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_emision",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"schema": "silver",
+					"table": "segip"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SEGIP_bronce')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -823,23 +909,48 @@
 				"schema": [
 					{
 						"name": "id",
-						"type": "nvarchar"
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "entrega_id",
+						"type": "varchar"
+					},
+					{
+						"name": "boleta_id",
+						"type": "varchar"
 					},
 					{
 						"name": "ci_beneficiaria",
-						"type": "nvarchar"
+						"type": "varchar"
 					},
 					{
-						"name": "fecha_emision",
-						"type": "nvarchar"
+						"name": "establecimiento_id",
+						"type": "varchar"
 					},
 					{
-						"name": "trimestre_gestacion",
-						"type": "nvarchar"
+						"name": "paquete_id",
+						"type": "varchar"
 					},
 					{
-						"name": "estado",
-						"type": "nvarchar"
+						"name": "paquete_nombre",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_entrega",
+						"type": "varchar"
+					},
+					{
+						"name": "lote_produccion",
+						"type": "varchar"
+					},
+					{
+						"name": "peso_paquete_kg",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_proxima_entrega",
+						"type": "varchar"
 					}
 				],
 				"typeProperties": {
@@ -947,63 +1058,6 @@
 				"typeProperties": {
 					"schema": "bronze",
 					"table": "sup_controles"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SUP_bronce_entregas')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_sql_subsidio",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "bronze"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "entrega_id",
-						"type": "nvarchar"
-					},
-					{
-						"name": "boleta_id",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ci_beneficiaria",
-						"type": "nvarchar"
-					},
-					{
-						"name": "paquete_id",
-						"type": "nvarchar"
-					},
-					{
-						"name": "establecimiento_id",
-						"type": "nvarchar"
-					},
-					{
-						"name": "fecha_entrega",
-						"type": "nvarchar"
-					},
-					{
-						"name": "mes_entrega",
-						"type": "nvarchar"
-					},
-					{
-						"name": "estado",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "bronze",
-					"table": "sup_entregas"
 				}
 			},
 			"dependsOn": [
