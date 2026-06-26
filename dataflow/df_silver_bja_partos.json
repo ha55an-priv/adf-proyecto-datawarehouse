@@ -52,7 +52,7 @@
 				"          fecha_parto = toDate(fecha_parto, 'yyyy-MM-dd'),",
 				"          tipo_parto = iif(isNull(tipo_parto), 'No Registrado', iif(in(['Cesárea', 'Cessárea', 'cesarea'], tipo_parto), 'Cesárea', iif(in(['Natural', 'Nattural', 'natural'], tipo_parto), 'Natural', tipo_parto))),",
 				"          peso_nacimiento_kg = iif(toDecimal(peso_nacimiento_kg, 5, 2) > 10.0, toDecimal(peso_nacimiento_kg, 5, 2) / 10.0, toDecimal(peso_nacimiento_kg, 5, 2)),",
-				"          talla_nacimiento_cm = iif(isNull(talla_nacimiento_cm), 0.0, toDecimal(talla_nacimiento_cm, 5, 2))) ~> limpiezaSilver",
+				"          talla_nacimiento_cm = iif(isNull(talla_nacimiento_cm), toDecimal(0.0, 5, 2), toDecimal(talla_nacimiento_cm, 5, 2))) ~> limpiezaSilver",
 				"limpiezaSilver sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

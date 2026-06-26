@@ -21,11 +21,11 @@
 				"type": "varchar"
 			},
 			{
-				"name": "ci_madre",
+				"name": "ci_nino",
 				"type": "varchar"
 			},
 			{
-				"name": "ci_recien_nacido",
+				"name": "ci_madre",
 				"type": "varchar"
 			},
 			{
@@ -33,15 +33,27 @@
 				"type": "varchar"
 			},
 			{
+				"name": "nro_control",
+				"type": "varchar"
+			},
+			{
 				"name": "fecha_control",
 				"type": "varchar"
 			},
 			{
-				"name": "peso",
+				"name": "peso_nino_kg",
 				"type": "varchar"
 			},
 			{
-				"name": "talla",
+				"name": "talla_nino_cm",
+				"type": "varchar"
+			},
+			{
+				"name": "vacuna_aplicada",
+				"type": "varchar"
+			},
+			{
+				"name": "resultado",
 				"type": "varchar"
 			}
 		],
