@@ -2,7 +2,7 @@
 	"name": "df_bronze_catalogo_paquetes",
 	"properties": {
 		"folder": {
-			"name": "bronze"
+			"name": "silver"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
