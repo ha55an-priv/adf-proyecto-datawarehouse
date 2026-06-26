@@ -21,11 +21,15 @@
 				"type": "varchar"
 			},
 			{
-				"name": "ci_madre",
+				"name": "ci_beneficiaria",
 				"type": "varchar"
 			},
 			{
-				"name": "monto",
+				"name": "concepto_pago",
+				"type": "varchar"
+			},
+			{
+				"name": "monto_bs",
 				"type": "varchar"
 			},
 			{
@@ -33,7 +37,15 @@
 				"type": "varchar"
 			},
 			{
-				"name": "banco",
+				"name": "estado_pago",
+				"type": "varchar"
+			},
+			{
+				"name": "canal_pago",
+				"type": "varchar"
+			},
+			{
+				"name": "nro_comprobante",
 				"type": "varchar"
 			}
 		],

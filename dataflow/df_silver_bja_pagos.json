@@ -17,6 +17,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "BJA_silver_pagos",
+						"type": "DatasetReference"
+					},
 					"name": "sink1"
 				}
 			],
@@ -29,20 +33,41 @@
 				"source(output(",
 				"          id as integer,",
 				"          pago_id as string,",
-				"          ci_madre as string,",
-				"          monto as string,",
+				"          ci_beneficiaria as string,",
+				"          concepto_pago as string,",
+				"          monto_bs as string,",
 				"          fecha_pago as string,",
-				"          banco as string",
+				"          estado_pago as string,",
+				"          canal_pago as string,",
+				"          nro_comprobante as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
-				"source1 derive() ~> derivedColumn1",
+				"source1 derive(monto_bs = toDecimal(iif(isNull(monto_bs) || monto_bs == '', '0.00', toString(monto_bs)), 5, 2),",
+				"          fecha_pago = toDate(fecha_pago, 'yyyy-MM-dd'),",
+				"          concepto_pago = iif(isNull(concepto_pago), 'No Especificado', trim(concepto_pago)),",
+				"          estado_pago = iif(isNull(estado_pago), 'Desconocido', trim(estado_pago)),",
+				"          canal_pago = iif(isNull(canal_pago), 'No Especificado', trim(canal_pago)),",
+				"          nro_comprobante = iif(isNull(nro_comprobante), 'S/N', trim(nro_comprobante))) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          pago_id as string,",
+				"          ci_madre as string,",
+				"          monto as decimal(10,2),",
+				"          fecha_pago as date,",
+				"          banco as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
