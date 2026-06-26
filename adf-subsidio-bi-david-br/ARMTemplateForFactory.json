@@ -5140,6 +5140,161 @@
 				"[concat(variables('factoryId'), '/datasets/BJA_silver_segip')]",
 				"[concat(variables('factoryId'), '/datasets/oro_Dim_Persona')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_gold_dim_paquete')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "gold"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SUP_silver_catalogo_paquetes",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "oro_Dim_Paquete",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          paquete_id as string,",
+						"          nombre_paquete as string,",
+						"          contenido_detalle as string,",
+						"          costo_estimado_bs as decimal(18,2)",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          paquete_id,",
+						"          nombre_paquete,",
+						"          contenido_detalle,",
+						"          costo_estimado_bs",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SUP_silver_catalogo_paquetes')]",
+				"[concat(variables('factoryId'), '/datasets/oro_Dim_Paquete')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_gold_dim_establecimient')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "gold"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SUP_silver_establecimientos",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "oro_Dim_Establecimiento",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          establecimiento_id as string,",
+						"          nombre_establecimiento as string,",
+						"          municipio as string,",
+						"          departamento as string,",
+						"          red_salud as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          establecimiento_id,",
+						"          nombre_establecimiento,",
+						"          municipio,",
+						"          departamento,",
+						"          red_salud",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SUP_silver_establecimientos')]",
+				"[concat(variables('factoryId'), '/datasets/oro_Dim_Establecimiento')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_gold_hechos_controles')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "gold"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"name": "source1"
+						}
+					],
+					"sinks": [],
+					"transformations": [],
+					"scriptLines": [
+						"source(allowSchemaDrift: true,",
+						"     validateSchema: false) ~> source1"
+					]
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }

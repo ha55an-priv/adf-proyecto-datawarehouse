@@ -13,6 +13,76 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/df_silver_sup_catalogo_paquetes')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "silver"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SUP_bronce_catalogo_paquetes",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SUP_silver_catalogo_paquetes",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          paquete_id as string,",
+						"          nombre as string,",
+						"          contenido as string,",
+						"          peso_estandar_kg as string,",
+						"          costo_estimado_bs as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(peso_estandar_kg = toDecimal(iif(isNull(peso_estandar_kg) || peso_estandar_kg == '', '0.00', toString(peso_estandar_kg)), 5, 2),",
+						"          costo_estimado_bs = toDecimal(iif(isNull(costo_estimado_bs) || costo_estimado_bs == '', '0.00', toString(costo_estimado_bs)), 10, 2),",
+						"          nombre = iif(isNull(nombre) || nombre == '', 'No Especificado', trim(nombre)),",
+						"          contenido = iif(isNull(contenido) || contenido == '', 'Sin Detalle', trim(contenido))) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          paquete_id as string,",
+						"          nombre_paquete as string,",
+						"          contenido_detalle as string,",
+						"          costo_estimado_bs as decimal(18,2)",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/df_silver_sup_controles')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -402,6 +472,130 @@
 						"          fecha_nacimiento,",
 						"          genero,",
 						"          estado_civil",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_gold_dim_paquete')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "gold"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SUP_silver_catalogo_paquetes",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "oro_Dim_Paquete",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          paquete_id as string,",
+						"          nombre_paquete as string,",
+						"          contenido_detalle as string,",
+						"          costo_estimado_bs as decimal(18,2)",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          paquete_id,",
+						"          nombre_paquete,",
+						"          contenido_detalle,",
+						"          costo_estimado_bs",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_gold_dim_establecimient')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "gold"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SUP_silver_establecimientos",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "oro_Dim_Establecimiento",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          establecimiento_id as string,",
+						"          nombre_establecimiento as string,",
+						"          municipio as string,",
+						"          departamento as string,",
+						"          red_salud as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          establecimiento_id,",
+						"          nombre_establecimiento,",
+						"          municipio,",
+						"          departamento,",
+						"          red_salud",
 						"     )) ~> sink1"
 					]
 				}
@@ -811,6 +1005,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_silver_sup_catalogo_paquetes')]",
 				"[concat(variables('factoryId'), '/dataflows/df_silver_sup_controles')]",
 				"[concat(variables('factoryId'), '/dataflows/df_silver_sup_establecimientos')]",
 				"[concat(variables('factoryId'), '/dataflows/df_silver_sup_inscripciones')]",

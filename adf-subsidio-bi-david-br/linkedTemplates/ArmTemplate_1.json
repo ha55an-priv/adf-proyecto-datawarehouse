@@ -13,6 +13,74 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SUP_bronce_entregas')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "entrega_id",
+						"type": "varchar"
+					},
+					{
+						"name": "boleta_id",
+						"type": "varchar"
+					},
+					{
+						"name": "ci_beneficiaria",
+						"type": "varchar"
+					},
+					{
+						"name": "establecimiento_id",
+						"type": "varchar"
+					},
+					{
+						"name": "paquete_id",
+						"type": "varchar"
+					},
+					{
+						"name": "paquete_nombre",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_entrega",
+						"type": "varchar"
+					},
+					{
+						"name": "lote_produccion",
+						"type": "varchar"
+					},
+					{
+						"name": "peso_paquete_kg",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_proxima_entrega",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "sup_entregas"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SUP_bronce_establecimientos')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1127,73 +1195,6 @@
 					},
 					{
 						"name": "fecha_proxima_entrega",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/sup_establecimientos_csv')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_datalake_subsidio",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "bronze"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "sup_establecimientos.csv",
-						"folderPath": "bronze",
-						"fileSystem": "subsidio-data"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "establecimiento_id",
-						"type": "String"
-					},
-					{
-						"name": "codigo_snis",
-						"type": "String"
-					},
-					{
-						"name": "nombre",
-						"type": "String"
-					},
-					{
-						"name": "tipo",
-						"type": "String"
-					},
-					{
-						"name": "nivel_atencion",
-						"type": "String"
-					},
-					{
-						"name": "municipio",
-						"type": "String"
-					},
-					{
-						"name": "departamento",
-						"type": "String"
-					},
-					{
-						"name": "red_salud",
-						"type": "String"
-					},
-					{
-						"name": "estado",
 						"type": "String"
 					}
 				]
