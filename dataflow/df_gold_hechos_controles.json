@@ -1,0 +1,129 @@
+{
+	"name": "df_gold_hechos_controles",
+	"properties": {
+		"folder": {
+			"name": "gold"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SUP_silver_controles",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "oro_Dim_Persona",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "oro_Dim_Establecimiento",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "oro_Hechos_Controles",
+						"type": "DatasetReference"
+					},
+					"name": "destinoHechosControles"
+				}
+			],
+			"transformations": [
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "lookup2"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          control_id as string,",
+				"          ci_beneficiaria as string,",
+				"          nro_control as integer,",
+				"          fecha_control as date,",
+				"          establecimiento_id as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source(output(",
+				"          persona_key as integer,",
+				"          ci_persona as string,",
+				"          nombre as string,",
+				"          primer_apellido as string,",
+				"          segundo_apellido as string,",
+				"          fecha_nacimiento as date,",
+				"          genero as string,",
+				"          estado_civil as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source2",
+				"source(output(",
+				"          establecimiento_key as integer,",
+				"          establecimiento_id as string,",
+				"          codigo_snis as string,",
+				"          nombre as string,",
+				"          tipo as string,",
+				"          nivel_atencion as string,",
+				"          municipio as string,",
+				"          departamento as string,",
+				"          red_salud as string,",
+				"          estado as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source3",
+				"source1, source2 lookup(ci_beneficiaria == ci_persona,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1, source3 lookup(source1@establecimiento_id == source3@establecimiento_id,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup2",
+				"lookup2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          control_id as string,",
+				"          persona_key as integer,",
+				"          establecimiento_key as integer,",
+				"          fecha_key as date,",
+				"          nro_control as integer,",
+				"          semana_gestacion as integer,",
+				"          peso_madre_kg as decimal(5,2),",
+				"          presion_arterial as string,",
+				"          fuente_origen as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          control_id,",
+				"          persona_key,",
+				"          establecimiento_key,",
+				"          nro_control",
+				"     )) ~> destinoHechosControles"
+			]
+		}
+	}
+}
