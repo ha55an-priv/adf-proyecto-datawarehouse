@@ -1021,36 +1021,49 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
 						"name": "entrega_id",
-						"type": "nvarchar"
+						"type": "varchar"
 					},
 					{
 						"name": "boleta_id",
-						"type": "nvarchar"
+						"type": "varchar"
 					},
 					{
 						"name": "ci_beneficiaria",
-						"type": "nvarchar"
-					},
-					{
-						"name": "paquete_id",
-						"type": "nvarchar"
+						"type": "varchar"
 					},
 					{
 						"name": "establecimiento_id",
-						"type": "nvarchar"
+						"type": "varchar"
+					},
+					{
+						"name": "paquete_id",
+						"type": "varchar"
+					},
+					{
+						"name": "paquete_nombre",
+						"type": "varchar"
 					},
 					{
 						"name": "fecha_entrega",
-						"type": "nvarchar"
+						"type": "varchar"
 					},
 					{
-						"name": "mes_entrega",
-						"type": "nvarchar"
+						"name": "lote_produccion",
+						"type": "varchar"
 					},
 					{
-						"name": "estado",
-						"type": "nvarchar"
+						"name": "peso_paquete_kg",
+						"type": "varchar"
+					},
+					{
+						"name": "fecha_proxima_entrega",
+						"type": "varchar"
 					}
 				],
 				"typeProperties": {
@@ -1078,28 +1091,45 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
 						"name": "establecimiento_id",
-						"type": "nvarchar"
+						"type": "varchar"
+					},
+					{
+						"name": "codigo_snis",
+						"type": "varchar"
 					},
 					{
 						"name": "nombre",
-						"type": "nvarchar"
+						"type": "varchar"
 					},
 					{
 						"name": "tipo",
-						"type": "nvarchar"
+						"type": "varchar"
 					},
 					{
-						"name": "departamento",
-						"type": "nvarchar"
+						"name": "nivel_atencion",
+						"type": "varchar"
 					},
 					{
 						"name": "municipio",
-						"type": "nvarchar"
+						"type": "varchar"
+					},
+					{
+						"name": "departamento",
+						"type": "varchar"
+					},
+					{
+						"name": "red_salud",
+						"type": "varchar"
 					},
 					{
 						"name": "estado",
-						"type": "nvarchar"
+						"type": "varchar"
 					}
 				],
 				"typeProperties": {
@@ -1127,32 +1157,33 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
 						"name": "inscripcion_id",
-						"type": "nvarchar"
+						"type": "varchar"
 					},
 					{
 						"name": "ci_beneficiaria",
-						"type": "nvarchar"
-					},
-					{
-						"name": "fecha_inscripcion",
-						"type": "nvarchar"
+						"type": "varchar"
 					},
 					{
 						"name": "establecimiento_id",
-						"type": "nvarchar"
+						"type": "varchar"
 					},
 					{
-						"name": "estado_embarazo",
-						"type": "nvarchar"
+						"name": "fecha_inscripcion",
+						"type": "varchar"
 					},
 					{
-						"name": "mes_gestacion_ingreso",
-						"type": "nvarchar"
+						"name": "semana_gestacion",
+						"type": "varchar"
 					},
 					{
-						"name": "estado",
-						"type": "nvarchar"
+						"name": "estado_inscripcion",
+						"type": "varchar"
 					}
 				],
 				"typeProperties": {
@@ -1438,8 +1469,17 @@
 						"type": "varchar"
 					},
 					{
+						"name": "establecimiento_id",
+						"type": "varchar"
+					},
+					{
 						"name": "fecha_inscripcion",
 						"type": "date"
+					},
+					{
+						"name": "semana_gestacion",
+						"type": "int",
+						"precision": 10
 					},
 					{
 						"name": "estado_inscripcion",
@@ -2995,11 +3035,15 @@
 						"source4 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
+						"          id as integer,",
 						"          establecimiento_id as string,",
+						"          codigo_snis as string,",
 						"          nombre as string,",
 						"          tipo as string,",
-						"          departamento as string,",
+						"          nivel_atencion as string,",
 						"          municipio as string,",
+						"          departamento as string,",
+						"          red_salud as string,",
 						"          estado as string",
 						"     ),",
 						"     deletable:false,",
@@ -3013,13 +3057,13 @@
 						"source5 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
+						"          id as integer,",
 						"          inscripcion_id as string,",
 						"          ci_beneficiaria as string,",
-						"          fecha_inscripcion as string,",
 						"          establecimiento_id as string,",
-						"          estado_embarazo as string,",
-						"          mes_gestacion_ingreso as string,",
-						"          estado as string",
+						"          fecha_inscripcion as string,",
+						"          semana_gestacion as string,",
+						"          estado_inscripcion as string",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -3032,11 +3076,15 @@
 						"source6 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
+						"          id as integer,",
 						"          establecimiento_id as string,",
+						"          codigo_snis as string,",
 						"          nombre as string,",
 						"          tipo as string,",
-						"          departamento as string,",
+						"          nivel_atencion as string,",
 						"          municipio as string,",
+						"          departamento as string,",
+						"          red_salud as string,",
 						"          estado as string",
 						"     ),",
 						"     deletable:false,",
@@ -3871,7 +3919,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"name": "[concat(parameters('factoryName'), '/df_silver_sup_establecimientos')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3880,15 +3928,240 @@
 				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
-					"sources": [],
-					"sinks": [],
-					"transformations": [],
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SUP_bronce_establecimientos",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SUP_silver_establecimientos",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
 					"scriptLines": [
-						""
+						"source(output(",
+						"          id as integer,",
+						"          establecimiento_id as string,",
+						"          codigo_snis as string,",
+						"          nombre as string,",
+						"          tipo as string,",
+						"          nivel_atencion as string,",
+						"          municipio as string,",
+						"          departamento as string,",
+						"          red_salud as string,",
+						"          estado as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(codigo_snis = iif(isNull(codigo_snis) || codigo_snis == '', 'S/C', trim(codigo_snis)),",
+						"          nombre = iif(isNull(nombre) || nombre == '', 'No Especificado', trim(nombre)),",
+						"          tipo = iif(isNull(tipo) || tipo == '', 'S/T', trim(tipo)),",
+						"          nivel_atencion = iif(isNull(nivel_atencion) || nivel_atencion == '', 'S/N', trim(nivel_atencion)),",
+						"          municipio = iif(isNull(municipio) || municipio == '', 'No Especificado', trim(municipio)),",
+						"          departamento = iif(isNull(departamento) || departamento == '', 'No Especificado', trim(departamento)),",
+						"          red_salud = iif(isNull(red_salud) || red_salud == '', 'No Especificado', trim(red_salud)),",
+						"          estado = upper(iif(isNull(estado) || estado == '', 'ACTIVO', trim(estado)))) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          establecimiento_id as string,",
+						"          nombre_establecimiento as string,",
+						"          municipio as string,",
+						"          departamento as string,",
+						"          red_salud as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SUP_bronce_establecimientos')]",
+				"[concat(variables('factoryId'), '/datasets/SUP_silver_establecimientos')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_silver_sup_inscripciones')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "silver"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SUP_bronce_inscripciones",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SUP_silver_inscripciones",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          id as integer,",
+						"          inscripcion_id as string,",
+						"          ci_beneficiaria as string,",
+						"          establecimiento_id as string,",
+						"          fecha_inscripcion as string,",
+						"          semana_gestacion as string,",
+						"          estado_inscripcion as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(fecha_inscripcion = toDate(fecha_inscripcion, 'yyyy-MM-dd'),",
+						"          semana_gestacion = toInteger(semana_gestacion),",
+						"          estado_inscripcion = upper(iif(isNull(estado_inscripcion) || estado_inscripcion == '', 'DESCONOCIDO', trim(estado_inscripcion)))) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          inscripcion_id as string,",
+						"          ci_beneficiaria as string,",
+						"          establecimiento_id as string,",
+						"          fecha_inscripcion as date,",
+						"          semana_gestacion as integer,",
+						"          estado_inscripcion as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SUP_bronce_inscripciones')]",
+				"[concat(variables('factoryId'), '/datasets/SUP_silver_inscripciones')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_silver_sup_entregas')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "silver"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SUP_bronce_entregas",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SUP_silver_entregas",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          id as integer,",
+						"          entrega_id as string,",
+						"          boleta_id as string,",
+						"          ci_beneficiaria as string,",
+						"          establecimiento_id as string,",
+						"          paquete_id as string,",
+						"          paquete_nombre as string,",
+						"          fecha_entrega as string,",
+						"          lote_produccion as string,",
+						"          peso_paquete_kg as string,",
+						"          fecha_proxima_entrega as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 derive(fecha_entrega = toDate(fecha_entrega, 'yyyy-MM-dd'),",
+						"          fecha_proxima_entrega = toDate(fecha_proxima_entrega, 'yyyy-MM-dd'),",
+						"          peso_paquete_kg = toDecimal(iif(isNull(peso_paquete_kg) || peso_paquete_kg == '', '0.00', toString(peso_paquete_kg)), 5, 2),",
+						"          paquete_nombre = iif(isNull(paquete_nombre) || paquete_nombre == '', 'No Especificado', trim(paquete_nombre)),",
+						"          lote_produccion = iif(isNull(lote_produccion) || lote_produccion == '', 'S/L', trim(lote_produccion))) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          entrega_id as string,",
+						"          boleta_id as string,",
+						"          ci_beneficiaria as string,",
+						"          establecimiento_id as string,",
+						"          paquete_id as string,",
+						"          paquete_nombre as string,",
+						"          fecha_entrega as date,",
+						"          lote_produccion as string,",
+						"          peso_paquete_kg as decimal(5,2),",
+						"          fecha_proxima_entrega as date",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SUP_bronce_entregas')]",
+				"[concat(variables('factoryId'), '/datasets/SUP_silver_entregas')]"
+			]
 		}
 	]
 }
