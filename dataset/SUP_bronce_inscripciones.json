@@ -10,36 +10,7 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [
-			{
-				"name": "inscripcion_id",
-				"type": "nvarchar"
-			},
-			{
-				"name": "ci_beneficiaria",
-				"type": "nvarchar"
-			},
-			{
-				"name": "fecha_inscripcion",
-				"type": "nvarchar"
-			},
-			{
-				"name": "establecimiento_id",
-				"type": "nvarchar"
-			},
-			{
-				"name": "estado_embarazo",
-				"type": "nvarchar"
-			},
-			{
-				"name": "mes_gestacion_ingreso",
-				"type": "nvarchar"
-			},
-			{
-				"name": "estado",
-				"type": "nvarchar"
-			}
-		],
+		"schema": [],
 		"typeProperties": {
 			"schema": "bronze",
 			"table": "sup_inscripciones"
