@@ -76,6 +76,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "silver"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [],
+					"sinks": [],
+					"transformations": [],
+					"scriptLines": [
+						""
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/BJA_bronce_controles_pediatricos')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -282,7 +302,11 @@
 						"type": "varchar"
 					},
 					{
-						"name": "ci_madre",
+						"name": "ci_beneficiaria",
+						"type": "varchar"
+					},
+					{
+						"name": "establecimiento_id",
 						"type": "varchar"
 					},
 					{
@@ -290,7 +314,11 @@
 						"type": "varchar"
 					},
 					{
-						"name": "establecimiento_id",
+						"name": "semana_gestacion",
+						"type": "varchar"
+					},
+					{
+						"name": "estado",
 						"type": "varchar"
 					}
 				],
@@ -328,11 +356,15 @@
 						"type": "varchar"
 					},
 					{
-						"name": "ci_madre",
+						"name": "ci_beneficiaria",
 						"type": "varchar"
 					},
 					{
-						"name": "monto",
+						"name": "concepto_pago",
+						"type": "varchar"
+					},
+					{
+						"name": "monto_bs",
 						"type": "varchar"
 					},
 					{
@@ -340,7 +372,15 @@
 						"type": "varchar"
 					},
 					{
-						"name": "banco",
+						"name": "estado_pago",
+						"type": "varchar"
+					},
+					{
+						"name": "canal_pago",
+						"type": "varchar"
+					},
+					{
+						"name": "nro_comprobante",
 						"type": "varchar"
 					}
 				],
@@ -964,55 +1004,6 @@
 				"typeProperties": {
 					"schema": "bronze",
 					"table": "sup_entregas"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_sql_subsidio')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SUP_bronce_establecimientos')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_sql_subsidio",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "bronze"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "establecimiento_id",
-						"type": "nvarchar"
-					},
-					{
-						"name": "nombre",
-						"type": "nvarchar"
-					},
-					{
-						"name": "tipo",
-						"type": "nvarchar"
-					},
-					{
-						"name": "departamento",
-						"type": "nvarchar"
-					},
-					{
-						"name": "municipio",
-						"type": "nvarchar"
-					},
-					{
-						"name": "estado",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "bronze",
-					"table": "sup_establecimientos"
 				}
 			},
 			"dependsOn": [

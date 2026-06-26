@@ -13,6 +13,53 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SUP_bronce_establecimientos')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "bronze"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "establecimiento_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "nombre",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tipo",
+						"type": "nvarchar"
+					},
+					{
+						"name": "departamento",
+						"type": "nvarchar"
+					},
+					{
+						"name": "municipio",
+						"type": "nvarchar"
+					},
+					{
+						"name": "estado",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "bronze",
+					"table": "sup_establecimientos"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SUP_bronce_inscripciones')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1149,10 +1196,13 @@
 						"     input(",
 						"          id as integer,",
 						"          pago_id as string,",
-						"          ci_madre as string,",
-						"          monto as string,",
+						"          ci_beneficiaria as string,",
+						"          concepto_pago as string,",
+						"          monto_bs as string,",
 						"          fecha_pago as string,",
-						"          banco as string",
+						"          estado_pago as string,",
+						"          canal_pago as string,",
+						"          nro_comprobante as string",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -1188,9 +1238,11 @@
 						"     input(",
 						"          id as integer,",
 						"          inscripcion_id as string,",
-						"          ci_madre as string,",
+						"          ci_beneficiaria as string,",
+						"          establecimiento_id as string,",
 						"          fecha_inscripcion as string,",
-						"          establecimiento_id as string",
+						"          semana_gestacion as string,",
+						"          estado as string",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -1582,6 +1634,7 @@
 				"[concat(variables('factoryId'), '/datasets/sup_entregas_csv')]",
 				"[concat(variables('factoryId'), '/datasets/sup_inscripciones_csv')]",
 				"[concat(variables('factoryId'), '/datasets/sup_establecimientos_csv')]",
+				"[concat(variables('factoryId'), '/datasets/SUP_bronce_establecimientos')]",
 				"[concat(variables('factoryId'), '/datasets/SUP_bronce_inscripciones')]"
 			]
 		},
@@ -1730,76 +1783,6 @@
 						"          fecha_control as date,",
 						"          peso as decimal(5,2),",
 						"          talla as decimal(5,2)",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df_silver_bja_controles_prenatales')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "silver"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "BJA_bronce_controles_prenatales",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "BJA_silver_controles_prenatales",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          id as integer,",
-						"          control_prenatal_id as string,",
-						"          ci_madre as string,",
-						"          establecimiento_id as string,",
-						"          fecha_control as string,",
-						"          semana_gestacion as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source1 derive(fecha_control = iif(instr(fecha_control, '-') == 5, toDate(fecha_control, 'yyyy-MM-dd'), toDate(fecha_control, 'dd-MM-yyyy')),",
-						"          semana_gestacion = toInteger(semana_gestacion)) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          control_prenatal_id as string,",
-						"          ci_madre as string,",
-						"          establecimiento_id as string,",
-						"          fecha_control as date,",
-						"          semana_gestacion as integer",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
