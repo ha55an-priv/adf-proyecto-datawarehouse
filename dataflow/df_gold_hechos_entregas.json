@@ -1,5 +1,5 @@
 {
-	"name": "df_gold_hechos_controles",
+	"name": "df_gold_hechos_entregas",
 	"properties": {
 		"folder": {
 			"name": "gold"
@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "SUP_silver_controles",
+						"referenceName": "SUP_silver_entregas",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -27,15 +27,22 @@
 						"type": "DatasetReference"
 					},
 					"name": "source3"
+				},
+				{
+					"dataset": {
+						"referenceName": "oro_Dim_Paquete",
+						"type": "DatasetReference"
+					},
+					"name": "source4"
 				}
 			],
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "oro_Hechos_Controles",
+						"referenceName": "oro_Hechos_Entregas",
 						"type": "DatasetReference"
 					},
-					"name": "destinoHechosControles"
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -44,18 +51,23 @@
 				},
 				{
 					"name": "lookup2"
+				},
+				{
+					"name": "lookup3"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
-				"          control_id as string,",
+				"          entrega_id as string,",
+				"          boleta_id as string,",
 				"          ci_beneficiaria as string,",
 				"          establecimiento_id as string,",
-				"          nro_control as integer,",
-				"          fecha_control as date,",
-				"          semana_gestacion as integer,",
-				"          peso_madre_kg as decimal(5,2),",
-				"          presion_arterial as string",
+				"          paquete_id as string,",
+				"          paquete_nombre as string,",
+				"          fecha_entrega as date,",
+				"          lote_produccion as string,",
+				"          peso_paquete_kg as decimal(5,2),",
+				"          fecha_proxima_entrega as date",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -91,6 +103,18 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source3",
+				"source(output(",
+				"          paquete_key as integer,",
+				"          paquete_id as string,",
+				"          nombre as string,",
+				"          contenido as string,",
+				"          peso_estandar_kg as decimal(5,2),",
+				"          costo_estimado_bs as decimal(10,2)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source4",
 				"source1, source2 lookup(ci_beneficiaria == ci_persona,",
 				"     multiple: false,",
 				"     pickup: 'any',",
@@ -99,18 +123,22 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup2",
-				"lookup2 sink(allowSchemaDrift: true,",
+				"lookup2, source4 lookup(source1@paquete_id == source4@paquete_id,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup3",
+				"lookup3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          control_id as string,",
+				"          entrega_id as string,",
+				"          boleta_id as string,",
 				"          persona_key as integer,",
 				"          establecimiento_key as integer,",
+				"          paquete_key as integer,",
 				"          fecha_key as date,",
-				"          nro_control as integer,",
-				"          semana_gestacion as integer,",
-				"          peso_madre_kg as decimal(5,2),",
-				"          presion_arterial as string,",
-				"          fuente_origen as string",
+				"          lote_produccion as string,",
+				"          peso_paquete_kg as decimal(5,2),",
+				"          fecha_proxima_entrega as date",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -121,15 +149,16 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          control_id,",
+				"          entrega_id,",
+				"          boleta_id,",
 				"          persona_key,",
 				"          establecimiento_key,",
-				"          fecha_key = fecha_control,",
-				"          nro_control,",
-				"          semana_gestacion,",
-				"          peso_madre_kg,",
-				"          presion_arterial",
-				"     )) ~> destinoHechosControles"
+				"          paquete_key,",
+				"          fecha_key = fecha_entrega,",
+				"          lote_produccion,",
+				"          peso_paquete_kg,",
+				"          fecha_proxima_entrega",
+				"     )) ~> sink1"
 			]
 		}
 	}

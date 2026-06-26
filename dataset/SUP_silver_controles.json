@@ -20,6 +20,10 @@
 				"type": "varchar"
 			},
 			{
+				"name": "establecimiento_id",
+				"type": "varchar"
+			},
+			{
 				"name": "nro_control",
 				"type": "int",
 				"precision": 10
@@ -29,7 +33,18 @@
 				"type": "date"
 			},
 			{
-				"name": "establecimiento_id",
+				"name": "semana_gestacion",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "peso_madre_kg",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "presion_arterial",
 				"type": "varchar"
 			}
 		],
