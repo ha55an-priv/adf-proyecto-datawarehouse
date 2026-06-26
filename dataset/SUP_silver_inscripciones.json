@@ -1,0 +1,36 @@
+{
+	"name": "SUP_silver_inscripciones",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_subsidio",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "silver"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "inscripcion_id",
+				"type": "varchar"
+			},
+			{
+				"name": "ci_beneficiaria",
+				"type": "varchar"
+			},
+			{
+				"name": "fecha_inscripcion",
+				"type": "date"
+			},
+			{
+				"name": "estado_inscripcion",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "silver",
+			"table": "sup_inscripciones"
+		}
+	}
+}

@@ -1,0 +1,76 @@
+{
+	"name": "df_silver_sup_boletas",
+	"properties": {
+		"folder": {
+			"name": "silver"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SUP_bronce_boletas",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SUP_silver_boletas",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as integer,",
+				"          entrega_id as string,",
+				"          boleta_id as string,",
+				"          ci_beneficiaria as string,",
+				"          establecimiento_id as string,",
+				"          paquete_id as string,",
+				"          paquete_nombre as string,",
+				"          fecha_entrega as string,",
+				"          lote_produccion as string,",
+				"          peso_paquete_kg as string,",
+				"          fecha_proxima_entrega as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 derive(fecha_entrega = toDate(fecha_entrega, 'yyyy-MM-dd'),",
+				"          fecha_proxima_entrega = toDate(fecha_proxima_entrega, 'yyyy-MM-dd'),",
+				"          peso_paquete_kg = toDecimal(iif(isNull(peso_paquete_kg) || peso_paquete_kg == '', '0.00', toString(peso_paquete_kg)), 5, 2),",
+				"          paquete_nombre = iif(isNull(paquete_nombre), 'No Especificado', trim(paquete_nombre)),",
+				"          lote_produccion = iif(isNull(lote_produccion) || lote_produccion == '', 'S/L', trim(lote_produccion))) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          boleta_id as string,",
+				"          control_id as string,",
+				"          ci_beneficiaria as string,",
+				"          nro_boleta as string,",
+				"          fecha_emision as date,",
+				"          estado as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}

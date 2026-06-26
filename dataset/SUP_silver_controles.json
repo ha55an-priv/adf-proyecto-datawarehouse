@@ -1,0 +1,41 @@
+{
+	"name": "SUP_silver_controles",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_subsidio",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "silver"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "control_id",
+				"type": "varchar"
+			},
+			{
+				"name": "ci_beneficiaria",
+				"type": "varchar"
+			},
+			{
+				"name": "nro_control",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "fecha_control",
+				"type": "date"
+			},
+			{
+				"name": "establecimiento_id",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "silver",
+			"table": "sup_controles"
+		}
+	}
+}

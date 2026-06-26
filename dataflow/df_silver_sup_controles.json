@@ -1,0 +1,72 @@
+{
+	"name": "df_silver_sup_controles",
+	"properties": {
+		"folder": {
+			"name": "silver"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SUP_bronce_controles",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SUP_silver_controles",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          control_id as string,",
+				"          ci_beneficiaria as string,",
+				"          establecimiento_id as string,",
+				"          nro_control as string,",
+				"          fecha_control as string,",
+				"          semana_gestacion as string,",
+				"          peso_madre_kg as string,",
+				"          presion_arterial as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 derive(fecha_control = toDate(fecha_control, 'yyyy-MM-dd'),",
+				"          nro_control = toInteger(nro_control),",
+				"          semana_gestacion = toInteger(semana_gestacion),",
+				"          peso_madre_kg = toDecimal(iif(isNull(peso_madre_kg) || peso_madre_kg == '', '0.00', toString(peso_madre_kg)), 5, 2),",
+				"          presion_arterial = iif(isNull(presion_arterial) || presion_arterial == '', 'S/D', trim(presion_arterial))) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          control_id as string,",
+				"          ci_beneficiaria as string,",
+				"          nro_control as integer,",
+				"          fecha_control as date,",
+				"          establecimiento_id as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}

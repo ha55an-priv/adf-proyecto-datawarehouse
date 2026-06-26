@@ -1,21 +1,16 @@
 {
-	"name": "SUP_bronce_boletas",
+	"name": "SUP_silver_entregas",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_sql_subsidio",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "bronze"
+			"name": "silver"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
-			{
-				"name": "id",
-				"type": "int",
-				"precision": 10
-			},
 			{
 				"name": "entrega_id",
 				"type": "varchar"
@@ -42,7 +37,7 @@
 			},
 			{
 				"name": "fecha_entrega",
-				"type": "varchar"
+				"type": "date"
 			},
 			{
 				"name": "lote_produccion",
@@ -50,16 +45,18 @@
 			},
 			{
 				"name": "peso_paquete_kg",
-				"type": "varchar"
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
 			},
 			{
 				"name": "fecha_proxima_entrega",
-				"type": "varchar"
+				"type": "date"
 			}
 		],
 		"typeProperties": {
-			"schema": "bronze",
-			"table": "sup_boletas"
+			"schema": "silver",
+			"table": "sup_entregas"
 		}
 	}
 }
