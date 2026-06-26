@@ -1,0 +1,53 @@
+{
+	"name": "oro_Dim_Persona",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_subsidio",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "gold"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "persona_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ci_persona",
+				"type": "varchar"
+			},
+			{
+				"name": "nombre",
+				"type": "varchar"
+			},
+			{
+				"name": "primer_apellido",
+				"type": "varchar"
+			},
+			{
+				"name": "segundo_apellido",
+				"type": "varchar"
+			},
+			{
+				"name": "fecha_nacimiento",
+				"type": "date"
+			},
+			{
+				"name": "genero",
+				"type": "varchar"
+			},
+			{
+				"name": "estado_civil",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "Dim_Persona"
+		}
+	}
+}

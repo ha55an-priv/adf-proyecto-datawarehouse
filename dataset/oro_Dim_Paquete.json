@@ -1,0 +1,19 @@
+{
+	"name": "oro_Dim_Paquete",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_subsidio",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "gold"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "Dim_Paquete"
+		}
+	}
+}
