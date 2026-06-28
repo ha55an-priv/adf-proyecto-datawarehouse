@@ -27,6 +27,9 @@
 			"transformations": [
 				{
 					"name": "limpiezaSilver"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -45,7 +48,12 @@
 				"          costo_estimado_bs = toDecimal(iif(isNull(costo_estimado_bs) || costo_estimado_bs == '', '0.00', toString(costo_estimado_bs)), 10, 2),",
 				"          nombre = iif(isNull(nombre) || nombre == '', 'No Especificado', trim(nombre)),",
 				"          contenido = iif(isNull(contenido) || contenido == '', 'Sin Detalle', trim(contenido))) ~> limpiezaSilver",
-				"limpiezaSilver sink(allowSchemaDrift: true,",
+				"limpiezaSilver aggregate(groupBy(paquete_id),",
+				"     nombre = first(nombre),",
+				"          contenido = first(contenido),",
+				"          peso_estandar_kg = first(peso_estandar_kg),",
+				"          costo_estimado_bs = first(costo_estimado_bs)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          paquete_id as string,",

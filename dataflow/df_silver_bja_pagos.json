@@ -27,6 +27,9 @@
 			"transformations": [
 				{
 					"name": "limpiezaSilver"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -51,7 +54,15 @@
 				"          estado_pago = iif(isNull(estado_pago), 'Desconocido', trim(estado_pago)),",
 				"          canal_pago = iif(isNull(canal_pago), 'No Especificado', trim(canal_pago)),",
 				"          nro_comprobante = iif(isNull(nro_comprobante), 'S/N', trim(nro_comprobante))) ~> limpiezaSilver",
-				"limpiezaSilver sink(allowSchemaDrift: true,",
+				"limpiezaSilver aggregate(groupBy(pago_id),",
+				"     ci_beneficiaria = first(ci_beneficiaria),",
+				"          concepto_pago = first(concepto_pago),",
+				"          monto_bs = first(monto_bs),",
+				"          fecha_pago = first(fecha_pago),",
+				"          estado_pago = first(estado_pago),",
+				"          canal_pago = first(canal_pago),",
+				"          nro_comprobante = first(nro_comprobante)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          pago_id as string,",

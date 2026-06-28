@@ -27,6 +27,9 @@
 			"transformations": [
 				{
 					"name": "limpiezaSilver"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -49,7 +52,15 @@
 				"          semana_gestacion = toInteger(semana_gestacion),",
 				"          peso_madre_kg = toDecimal(iif(isNull(peso_madre_kg) || peso_madre_kg == '', '0.00', toString(peso_madre_kg)), 5, 2),",
 				"          presion_arterial = iif(isNull(presion_arterial) || presion_arterial == '', 'S/D', trim(presion_arterial))) ~> limpiezaSilver",
-				"limpiezaSilver sink(allowSchemaDrift: true,",
+				"limpiezaSilver aggregate(groupBy(control_id),",
+				"     ci_beneficiaria = first(ci_beneficiaria),",
+				"          establecimiento_id = first(establecimiento_id),",
+				"          nro_control = first(nro_control),",
+				"          fecha_control = first(fecha_control),",
+				"          semana_gestacion = first(semana_gestacion),",
+				"          peso_madre_kg = first(peso_madre_kg),",
+				"          presion_arterial = first(presion_arterial)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          control_id as string,",

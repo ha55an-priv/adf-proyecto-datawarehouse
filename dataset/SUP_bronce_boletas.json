@@ -12,48 +12,29 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "id",
+				"name": "boleta_id",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "entrega_id",
-				"type": "varchar"
-			},
-			{
-				"name": "boleta_id",
-				"type": "varchar"
+				"name": "control_id",
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "ci_beneficiaria",
 				"type": "varchar"
 			},
 			{
-				"name": "establecimiento_id",
+				"name": "nro_boleta",
 				"type": "varchar"
 			},
 			{
-				"name": "paquete_id",
-				"type": "varchar"
+				"name": "fecha_emision",
+				"type": "date"
 			},
 			{
-				"name": "paquete_nombre",
-				"type": "varchar"
-			},
-			{
-				"name": "fecha_entrega",
-				"type": "varchar"
-			},
-			{
-				"name": "lote_produccion",
-				"type": "varchar"
-			},
-			{
-				"name": "peso_paquete_kg",
-				"type": "varchar"
-			},
-			{
-				"name": "fecha_proxima_entrega",
+				"name": "estado",
 				"type": "varchar"
 			}
 		],

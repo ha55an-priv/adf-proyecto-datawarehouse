@@ -27,6 +27,9 @@
 			"transformations": [
 				{
 					"name": "limpiezaSilver"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -53,7 +56,15 @@
 				"          tipo_parto = iif(isNull(tipo_parto), 'No Registrado', iif(in(['Cesárea', 'Cessárea', 'cesarea'], tipo_parto), 'Cesárea', iif(in(['Natural', 'Nattural', 'natural'], tipo_parto), 'Natural', tipo_parto))),",
 				"          peso_nacimiento_kg = iif(toDecimal(peso_nacimiento_kg, 5, 2) > 10.0, toDecimal(peso_nacimiento_kg, 5, 2) / 10.0, toDecimal(peso_nacimiento_kg, 5, 2)),",
 				"          talla_nacimiento_cm = iif(isNull(talla_nacimiento_cm), toDecimal(0.0, 5, 2), toDecimal(talla_nacimiento_cm, 5, 2))) ~> limpiezaSilver",
-				"limpiezaSilver sink(allowSchemaDrift: true,",
+				"limpiezaSilver aggregate(groupBy(parto_id),",
+				"     ci_madre = first(ci_madre),",
+				"          ci_recien_nacido = first(ci_recien_nacido),",
+				"          establecimiento_id = first(establecimiento_id),",
+				"          fecha_parto = first(fecha_parto),",
+				"          tipo_parto = first(tipo_parto),",
+				"          peso_nacimiento_kg = first(peso_nacimiento_kg),",
+				"          talla_nacimiento_cm = first(talla_nacimiento_cm)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          parto_id as string,",

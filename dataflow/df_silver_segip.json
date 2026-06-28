@@ -27,6 +27,9 @@
 			"transformations": [
 				{
 					"name": "limpiezaSilver"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -60,7 +63,22 @@
 				"          profesion = iif(isNull(profesion) || profesion == '', 'Ninguna', trim(profesion)),",
 				"          nivel_estudios = iif(isNull(nivel_estudios), 'No Especificado', trim(nivel_estudios)),",
 				"          municipio_residencia = iif(isNull(municipio_residencia), 'No Especificado', trim(municipio_residencia))) ~> limpiezaSilver",
-				"limpiezaSilver sink(allowSchemaDrift: true,",
+				"limpiezaSilver aggregate(groupBy(ci),",
+				"     nombres = first(nombres),",
+				"          apellido_paterno = first(apellido_paterno),",
+				"          apellido_materno = first(apellido_materno),",
+				"          fecha_nacimiento = first(fecha_nacimiento),",
+				"          genero = first(genero),",
+				"          estado_civil = first(estado_civil),",
+				"          ci_conyuge = first(ci_conyuge),",
+				"          numero_hijos = first(numero_hijos),",
+				"          ci_padre = first(ci_padre),",
+				"          ci_madre = first(ci_madre),",
+				"          profesion = first(profesion),",
+				"          nivel_estudios = first(nivel_estudios),",
+				"          municipio_residencia = first(municipio_residencia),",
+				"          fecha_emision = first(fecha_emision)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          ci as string,",
