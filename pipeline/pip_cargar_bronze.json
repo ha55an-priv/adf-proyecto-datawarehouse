@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "df_bronce_bja",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -27,7 +27,7 @@
 				}
 			},
 			{
-				"name": "Data flow2",
+				"name": "df_bronce_segip",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -51,7 +51,7 @@
 				}
 			},
 			{
-				"name": "Data flow3",
+				"name": "df_bronce_sup",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
