@@ -12,20 +12,19 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "id",
-				"type": "int",
-				"precision": 10
-			},
-			{
 				"name": "control_prenatal_id",
 				"type": "varchar"
 			},
 			{
-				"name": "ci_madre",
+				"name": "ci_beneficiaria",
 				"type": "varchar"
 			},
 			{
 				"name": "establecimiento_id",
+				"type": "varchar"
+			},
+			{
+				"name": "nro_control",
 				"type": "varchar"
 			},
 			{
@@ -34,6 +33,18 @@
 			},
 			{
 				"name": "semana_gestacion",
+				"type": "varchar"
+			},
+			{
+				"name": "peso_madre_kg",
+				"type": "varchar"
+			},
+			{
+				"name": "presion_arterial",
+				"type": "varchar"
+			},
+			{
+				"name": "resultado",
 				"type": "varchar"
 			}
 		],

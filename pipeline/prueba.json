@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "df_silver_bja_pagos",
+						"referenceName": "df_silver_bja_controles_prenatales",
 						"type": "DataFlowReference"
 					},
 					"compute": {

@@ -27,6 +27,9 @@
 			"transformations": [
 				{
 					"name": "limpiezaSilver"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -52,7 +55,17 @@
 				"          talla_nino_cm = toDecimal(talla_nino_cm, 5, 2),",
 				"          vacuna_aplicada = iif(isNull(vacuna_aplicada), 'Ninguna', vacuna_aplicada),",
 				"          resultado = iif(isNull(resultado), 'Sin Observaciones', resultado)) ~> limpiezaSilver",
-				"limpiezaSilver sink(allowSchemaDrift: true,",
+				"limpiezaSilver aggregate(groupBy(control_pediatrico_id),",
+				"     ci_nino = first(ci_nino),",
+				"          ci_madre = first(ci_madre),",
+				"          establecimiento_id = first(establecimiento_id),",
+				"          nro_control = first(nro_control),",
+				"          fecha_control = first(fecha_control),",
+				"          peso_nino_kg = first(peso_nino_kg),",
+				"          talla_nino_cm = first(talla_nino_cm),",
+				"          vacuna_aplicada = first(vacuna_aplicada),",
+				"          resultado = first(resultado)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          control_pediatrico_id as string,",
