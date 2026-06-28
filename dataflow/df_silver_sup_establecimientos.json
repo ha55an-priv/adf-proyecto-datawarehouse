@@ -58,7 +58,7 @@
 				"          red_salud = iif(isNull(red_salud) || red_salud == '', 'No Especificado', trim(red_salud)),",
 				"          estado = upper(iif(isNull(estado) || estado == '', 'ACTIVO', trim(estado)))) ~> derivedColumn1",
 				"derivedColumn1 aggregate(groupBy(establecimiento_id),",
-				"     each(match(true()), $$ = first($$))) ~> aggregate1",
+				"     each(match(name != 'establecimiento_id'), $$ = first($$))) ~> aggregate1",
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
