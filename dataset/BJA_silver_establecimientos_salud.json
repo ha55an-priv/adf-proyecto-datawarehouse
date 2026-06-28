@@ -42,10 +42,14 @@
 			{
 				"name": "red_salud",
 				"type": "varchar"
+			},
+			{
+				"name": "estado",
+				"type": "varchar"
 			}
 		],
 		"typeProperties": {
-			"schema": "silver",
+			"schema": "bronze",
 			"table": "bja_establecimientos_salud"
 		}
 	}

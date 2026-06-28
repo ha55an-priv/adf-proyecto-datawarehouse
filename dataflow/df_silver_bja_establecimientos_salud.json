@@ -27,11 +27,13 @@
 			"transformations": [
 				{
 					"name": "limpiezaSilver"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
-				"          id as integer,",
 				"          establecimiento_id as string,",
 				"          codigo_snis as string,",
 				"          nombre as string,",
@@ -39,7 +41,8 @@
 				"          nivel_atencion as string,",
 				"          municipio as string,",
 				"          departamento as string,",
-				"          red_salud as string",
+				"          red_salud as string,",
+				"          estado as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -52,7 +55,16 @@
 				"          municipio = iif(isNull(municipio), 'No Especificado', trim(municipio)),",
 				"          departamento = iif(isNull(departamento), 'No Especificado', trim(departamento)),",
 				"          red_salud = iif(isNull(red_salud), 'No Especificado', trim(red_salud))) ~> limpiezaSilver",
-				"limpiezaSilver sink(allowSchemaDrift: true,",
+				"limpiezaSilver aggregate(groupBy(establecimiento_id),",
+				"     codigo_snis = first(codigo_snis),",
+				"          nombre = first(nombre),",
+				"          tipo = first(tipo),",
+				"          nivel_atencion = first(nivel_atencion),",
+				"          municipio = first(municipio),",
+				"          departamento = first(departamento),",
+				"          red_salud = first(red_salud),",
+				"          estado = first(estado)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          establecimiento_id as string,",
@@ -62,7 +74,8 @@
 				"          nivel_atencion as string,",
 				"          municipio as string,",
 				"          departamento as string,",
-				"          red_salud as string",
+				"          red_salud as string,",
+				"          estado as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",

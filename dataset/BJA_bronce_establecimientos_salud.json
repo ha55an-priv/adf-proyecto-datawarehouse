@@ -12,11 +12,6 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "id",
-				"type": "int",
-				"precision": 10
-			},
-			{
 				"name": "establecimiento_id",
 				"type": "varchar"
 			},
@@ -46,6 +41,10 @@
 			},
 			{
 				"name": "red_salud",
+				"type": "varchar"
+			},
+			{
+				"name": "estado",
 				"type": "varchar"
 			}
 		],
