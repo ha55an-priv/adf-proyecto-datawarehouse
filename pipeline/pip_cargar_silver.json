@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "df_silver_bja_controles_pediatricos",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -27,11 +27,11 @@
 				}
 			},
 			{
-				"name": "Data flow2",
+				"name": "df_silver_bja_controles_prenatales",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
+						"activity": "df_silver_bja_controles_pediatricos",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -58,11 +58,11 @@
 				}
 			},
 			{
-				"name": "Data flow3",
+				"name": "df_silver_bja_establecimientos_salud",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow2",
+						"activity": "df_silver_bja_controles_prenatales",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -89,11 +89,11 @@
 				}
 			},
 			{
-				"name": "Data flow4",
+				"name": "df_silver_bja_inscripciones",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow3",
+						"activity": "df_silver_bja_establecimientos_salud",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -120,11 +120,11 @@
 				}
 			},
 			{
-				"name": "Data flow5",
+				"name": "df_silver_bja_pagos",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow4",
+						"activity": "df_silver_bja_inscripciones",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -151,11 +151,11 @@
 				}
 			},
 			{
-				"name": "Data flow6",
+				"name": "df_silver_bja_partos",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow5",
+						"activity": "df_silver_bja_pagos",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -182,11 +182,11 @@
 				}
 			},
 			{
-				"name": "Data flow8",
+				"name": "df_silver_segip",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow6",
+						"activity": "df_silver_bja_partos",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -213,11 +213,11 @@
 				}
 			},
 			{
-				"name": "Data flow9",
+				"name": "df_silver_sup_boletas",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow8",
+						"activity": "df_silver_segip",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -244,11 +244,11 @@
 				}
 			},
 			{
-				"name": "Data flow10",
+				"name": "df_silver_sup_catalogo_paquetes",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow9",
+						"activity": "df_silver_sup_boletas",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -275,11 +275,11 @@
 				}
 			},
 			{
-				"name": "Data flow11",
+				"name": "df_silver_sup_controles",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow10",
+						"activity": "df_silver_sup_catalogo_paquetes",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -306,11 +306,11 @@
 				}
 			},
 			{
-				"name": "Data flow12",
+				"name": "df_silver_sup_establecimientos",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow11",
+						"activity": "df_silver_sup_controles",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -337,11 +337,11 @@
 				}
 			},
 			{
-				"name": "Data flow13",
+				"name": "df_silver_sup_inscripciones",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow12",
+						"activity": "df_silver_sup_establecimientos",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -368,11 +368,11 @@
 				}
 			},
 			{
-				"name": "Data flow14",
+				"name": "df_silver_sup_entregas",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow13",
+						"activity": "df_silver_sup_inscripciones",
 						"dependencyConditions": [
 							"Completed"
 						]

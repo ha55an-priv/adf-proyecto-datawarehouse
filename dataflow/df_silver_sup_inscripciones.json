@@ -27,6 +27,9 @@
 			"transformations": [
 				{
 					"name": "limpiezaSilver"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -46,7 +49,13 @@
 				"source1 derive(fecha_inscripcion = toDate(fecha_inscripcion, 'yyyy-MM-dd'),",
 				"          semana_gestacion = toInteger(semana_gestacion),",
 				"          estado_inscripcion = upper(iif(isNull(estado_inscripcion) || estado_inscripcion == '', 'DESCONOCIDO', trim(estado_inscripcion)))) ~> limpiezaSilver",
-				"limpiezaSilver sink(allowSchemaDrift: true,",
+				"limpiezaSilver aggregate(groupBy(inscripcion_id),",
+				"     ci_beneficiaria = first(ci_beneficiaria),",
+				"          establecimiento_id = first(establecimiento_id),",
+				"          fecha_inscripcion = first(fecha_inscripcion),",
+				"          semana_gestacion = first(semana_gestacion),",
+				"          estado_inscripcion = first(estado_inscripcion)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          inscripcion_id as string,",
@@ -64,7 +73,15 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          inscripcion_id,",
+				"          ci_beneficiaria,",
+				"          establecimiento_id,",
+				"          fecha_inscripcion,",
+				"          semana_gestacion,",
+				"          estado_inscripcion",
+				"     )) ~> sink1"
 			]
 		}
 	}
