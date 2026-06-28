@@ -26,7 +26,7 @@
 			],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "limpiezaSilver"
 				}
 			],
 			"scriptLines": [
@@ -48,8 +48,8 @@
 				"          nro_control = toInteger(nro_control),",
 				"          semana_gestacion = toInteger(semana_gestacion),",
 				"          peso_madre_kg = toDecimal(iif(isNull(peso_madre_kg) || peso_madre_kg == '', '0.00', toString(peso_madre_kg)), 5, 2),",
-				"          presion_arterial = iif(isNull(presion_arterial) || presion_arterial == '', 'S/D', trim(presion_arterial))) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"          presion_arterial = iif(isNull(presion_arterial) || presion_arterial == '', 'S/D', trim(presion_arterial))) ~> limpiezaSilver",
+				"limpiezaSilver sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          control_id as string,",

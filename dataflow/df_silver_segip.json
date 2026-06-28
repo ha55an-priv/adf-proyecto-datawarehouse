@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "segip_csv",
+						"referenceName": "SEGIP_bronce",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -26,30 +26,24 @@
 			],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "limpiezaSilver"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
+				"          id as integer,",
 				"          ci as string,",
-				"          nombres as string,",
-				"          apellido_paterno as string,",
-				"          apellido_materno as string,",
+				"          nombre as string,",
+				"          paterno as string,",
+				"          materno as string,",
 				"          fecha_nacimiento as string,",
 				"          genero as string,",
-				"          estado_civil as string,",
-				"          ci_conyuge as string,",
-				"          numero_hijos as string,",
-				"          ci_padre as string,",
-				"          ci_madre as string,",
-				"          profesion as string,",
-				"          nivel_estudios as string,",
-				"          municipio_residencia as string,",
-				"          fecha_emision as string",
+				"          estado_civil as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
 				"source1 derive(fecha_nacimiento = toDate(fecha_nacimiento, 'yyyy-MM-dd'),",
 				"          numero_hijos = toInteger(numero_hijos),",
 				"          apellido_paterno = iif(isNull(apellido_paterno) || apellido_paterno == '', 'S/A', trim(apellido_paterno)),",
@@ -57,8 +51,8 @@
 				"          estado_civil = iif(isNull(estado_civil), 'Soltero(a)', trim(estado_civil)),",
 				"          profesion = iif(isNull(profesion) || profesion == '', 'Ninguna', trim(profesion)),",
 				"          nivel_estudios = iif(isNull(nivel_estudios), 'No Especificado', trim(nivel_estudios)),",
-				"          municipio_residencia = iif(isNull(municipio_residencia), 'No Especificado', trim(municipio_residencia))) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"          municipio_residencia = iif(isNull(municipio_residencia), 'No Especificado', trim(municipio_residencia))) ~> limpiezaSilver",
+				"limpiezaSilver sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          ci as string,",

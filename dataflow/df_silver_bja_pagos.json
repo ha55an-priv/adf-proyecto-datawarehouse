@@ -26,7 +26,7 @@
 			],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "limpiezaSilver"
 				}
 			],
 			"scriptLines": [
@@ -50,8 +50,8 @@
 				"          concepto_pago = iif(isNull(concepto_pago), 'No Especificado', trim(concepto_pago)),",
 				"          estado_pago = iif(isNull(estado_pago), 'Desconocido', trim(estado_pago)),",
 				"          canal_pago = iif(isNull(canal_pago), 'No Especificado', trim(canal_pago)),",
-				"          nro_comprobante = iif(isNull(nro_comprobante), 'S/N', trim(nro_comprobante))) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"          nro_comprobante = iif(isNull(nro_comprobante), 'S/N', trim(nro_comprobante))) ~> limpiezaSilver",
+				"limpiezaSilver sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          pago_id as string,",

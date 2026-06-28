@@ -26,7 +26,7 @@
 			],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "limpiezaSilver"
 				}
 			],
 			"scriptLines": [
@@ -51,8 +51,8 @@
 				"          peso_nino_kg = toDecimal(iif(isNull(peso_nino_kg), '0.00', toString(peso_nino_kg)), 5, 2),",
 				"          talla_nino_cm = toDecimal(talla_nino_cm, 5, 2),",
 				"          vacuna_aplicada = iif(isNull(vacuna_aplicada), 'Ninguna', vacuna_aplicada),",
-				"          resultado = iif(isNull(resultado), 'Sin Observaciones', resultado)) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"          resultado = iif(isNull(resultado), 'Sin Observaciones', resultado)) ~> limpiezaSilver",
+				"limpiezaSilver sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          control_pediatrico_id as string,",

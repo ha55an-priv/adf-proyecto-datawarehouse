@@ -26,7 +26,7 @@
 			],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "limpiezaSilver"
 				}
 			],
 			"scriptLines": [
@@ -51,8 +51,8 @@
 				"          nivel_atencion = iif(isNull(nivel_atencion), 'No Especificado', trim(nivel_atencion)),",
 				"          municipio = iif(isNull(municipio), 'No Especificado', trim(municipio)),",
 				"          departamento = iif(isNull(departamento), 'No Especificado', trim(departamento)),",
-				"          red_salud = iif(isNull(red_salud), 'No Especificado', trim(red_salud))) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"          red_salud = iif(isNull(red_salud), 'No Especificado', trim(red_salud))) ~> limpiezaSilver",
+				"limpiezaSilver sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          establecimiento_id as string,",

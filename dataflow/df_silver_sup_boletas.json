@@ -26,7 +26,7 @@
 			],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "limpiezaSilver"
 				}
 			],
 			"scriptLines": [
@@ -51,8 +51,8 @@
 				"          fecha_proxima_entrega = toDate(fecha_proxima_entrega, 'yyyy-MM-dd'),",
 				"          peso_paquete_kg = toDecimal(iif(isNull(peso_paquete_kg) || peso_paquete_kg == '', '0.00', toString(peso_paquete_kg)), 5, 2),",
 				"          paquete_nombre = iif(isNull(paquete_nombre), 'No Especificado', trim(paquete_nombre)),",
-				"          lote_produccion = iif(isNull(lote_produccion) || lote_produccion == '', 'S/L', trim(lote_produccion))) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"          lote_produccion = iif(isNull(lote_produccion) || lote_produccion == '', 'S/L', trim(lote_produccion))) ~> limpiezaSilver",
+				"limpiezaSilver sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          boleta_id as string,",
