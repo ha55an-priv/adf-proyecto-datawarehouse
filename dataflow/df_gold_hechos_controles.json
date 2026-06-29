@@ -115,7 +115,7 @@
 				"          presion_arterial = presion_arterial,",
 				"          resultado = resultado) ~> derivedColumn1",
 				"source1 derive(control_id = concat('BJA_PED_', toString(control_pediatrico_id)),",
-				"          programa = 'BJA'  ,",
+				"          programa = 'BJA',",
 				"          ci_beneficiaria = ci_madre,",
 				"          fecha_control = fecha_control,",
 				"          tipo_control = 'PEDIATRICO',",
@@ -194,14 +194,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          control_id,",
-				"          nro_control,",
-				"          semana_gestacion,",
-				"          peso_madre_kg,",
-				"          presion_arterial",
-				"     )) ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
