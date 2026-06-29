@@ -112,8 +112,7 @@
 				"          ci_madre,",
 				"          profesion,",
 				"          nivel_estudios,",
-				"          municipio_residencia,",
-				"          fecha_emision",
+				"          municipio_residencia",
 				"     )) ~> sink1"
 			]
 		}
