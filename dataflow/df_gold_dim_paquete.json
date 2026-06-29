@@ -24,7 +24,11 @@
 					"name": "sink1"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "select1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          paquete_id as string,",
@@ -36,7 +40,15 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
-				"source1 sink(allowSchemaDrift: true,",
+				"source1 select(mapColumn(",
+				"          paquete_id,",
+				"          nombre_paquete,",
+				"          contenido_detalle,",
+				"          costo_estimado_bs",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          paquete_key as integer,",
@@ -50,14 +62,15 @@
 				"     insertable:true,",
 				"     updateable:false,",
 				"     upsertable:false,",
+				"     truncate:true,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          paquete_id,",
-				"          nombre_paquete,",
-				"          contenido_detalle,",
+				"          nombre = nombre_paquete,",
+				"          contenido = contenido_detalle,",
 				"          costo_estimado_bs",
 				"     )) ~> sink1"
 			]

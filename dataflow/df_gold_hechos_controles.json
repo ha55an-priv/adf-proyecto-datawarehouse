@@ -9,24 +9,24 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "SUP_silver_controles",
+						"referenceName": "BJA_silver_controles_prenatales",
+						"type": "DatasetReference"
+					},
+					"name": "ImportarSupSilverControles"
+				},
+				{
+					"dataset": {
+						"referenceName": "BJA_silver_controles_pediatricos",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
 				},
 				{
 					"dataset": {
-						"referenceName": "oro_Dim_Persona",
+						"referenceName": "SUP_silver_controles",
 						"type": "DatasetReference"
 					},
 					"name": "source2"
-				},
-				{
-					"dataset": {
-						"referenceName": "oro_Dim_Establecimiento",
-						"type": "DatasetReference"
-					},
-					"name": "source3"
 				}
 			],
 			"sinks": [
@@ -35,18 +35,61 @@
 						"referenceName": "oro_Hechos_Controles",
 						"type": "DatasetReference"
 					},
-					"name": "destinoHechosControles"
+					"name": "sink1"
 				}
 			],
 			"transformations": [
 				{
-					"name": "lookup1"
+					"name": "derivedColumn1"
 				},
 				{
-					"name": "lookup2"
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "select3"
+				},
+				{
+					"name": "union1"
 				}
 			],
 			"scriptLines": [
+				"source(output(",
+				"          control_prenatal_id as string,",
+				"          ci_beneficiaria as string,",
+				"          establecimiento_id as string,",
+				"          nro_control as string,",
+				"          fecha_control as string,",
+				"          semana_gestacion as string,",
+				"          peso_madre_kg as string,",
+				"          presion_arterial as string,",
+				"          resultado as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ImportarSupSilverControles",
+				"source(output(",
+				"          control_pediatrico_id as string,",
+				"          ci_madre as string,",
+				"          ci_recien_nacido as string,",
+				"          establecimiento_id as string,",
+				"          fecha_control as date,",
+				"          peso as decimal(5,2),",
+				"          talla as decimal(5,2)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
 				"source(output(",
 				"          control_id as string,",
 				"          ci_beneficiaria as string,",
@@ -60,46 +103,72 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1",
-				"source(output(",
-				"          persona_key as integer,",
-				"          ci_persona as string,",
-				"          nombre as string,",
-				"          primer_apellido as string,",
-				"          segundo_apellido as string,",
-				"          fecha_nacimiento as date,",
-				"          genero as string,",
-				"          estado_civil as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source2",
-				"source(output(",
-				"          establecimiento_key as integer,",
-				"          establecimiento_id as string,",
-				"          codigo_snis as string,",
-				"          nombre as string,",
-				"          tipo as string,",
-				"          nivel_atencion as string,",
-				"          municipio as string,",
-				"          departamento as string,",
-				"          red_salud as string,",
-				"          estado as string",
+				"ImportarSupSilverControles derive(control_prenatal = control_prenatal_id,",
+				"          programa = 'BJA',",
+				"          tipo_control = 'PRENATAL',",
+				"          ci_beneficiaria = ci_beneficiaria,",
+				"          fecha_control = toDate(fecha_control),",
+				"          nro_control = toInteger(nro_control),",
+				"          semana_gestacion = toInteger(semana_gestacion),",
+				"          peso_madre_kg = toDecimal(peso_madre_kg)) ~> derivedColumn1",
+				"source1 derive(control_pediatrico_id = control_pediatrico_id,",
+				"          programa = 'BJA'  ,",
+				"          ci_madre = ci_madre,",
+				"          ci_recien_nacido = ci_recien_nacido,",
+				"          fecha_control = fecha_control,",
+				"          peso = peso,",
+				"          talla = talla) ~> derivedColumn2",
+				"source2 derive(control_id = control_id,",
+				"          programa = 'SUP',",
+				"          ci_beneficiaria = ci_beneficiaria,",
+				"          fecha_control = fecha_control,",
+				"          nro_control = nro_control,",
+				"          semana_gestacion = semana_gestacion,",
+				"          peso_madre_kg = peso_madre_kg) ~> derivedColumn3",
+				"derivedColumn1 select(mapColumn(",
+				"          control_prenatal_id,",
+				"          ci_beneficiaria,",
+				"          establecimiento_id,",
+				"          nro_control,",
+				"          fecha_control,",
+				"          semana_gestacion,",
+				"          peso_madre_kg,",
+				"          presion_arterial,",
+				"          resultado,",
+				"          control_prenatal,",
+				"          programa,",
+				"          tipo_control",
 				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source3",
-				"source1, source2 lookup(ci_beneficiaria == ci_persona,",
-				"     multiple: false,",
-				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup1",
-				"lookup1, source3 lookup(source1@establecimiento_id == source3@establecimiento_id,",
-				"     multiple: false,",
-				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup2",
-				"lookup2 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"derivedColumn2 select(mapColumn(",
+				"          control_pediatrico_id,",
+				"          ci_madre,",
+				"          ci_recien_nacido,",
+				"          establecimiento_id,",
+				"          fecha_control,",
+				"          peso,",
+				"          talla,",
+				"          programa",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"derivedColumn3 select(mapColumn(",
+				"          control_id,",
+				"          ci_beneficiaria,",
+				"          establecimiento_id,",
+				"          nro_control,",
+				"          fecha_control,",
+				"          semana_gestacion,",
+				"          peso_madre_kg,",
+				"          presion_arterial,",
+				"          programa",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"select1, select2, select3 union(byName: true)~> union1",
+				"union1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          control_id as string,",
@@ -116,20 +185,18 @@
 				"     insertable:true,",
 				"     updateable:false,",
 				"     upsertable:false,",
+				"     truncate:true,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          control_id,",
-				"          persona_key,",
-				"          establecimiento_key,",
-				"          fecha_key = fecha_control,",
 				"          nro_control,",
 				"          semana_gestacion,",
 				"          peso_madre_kg,",
 				"          presion_arterial",
-				"     )) ~> destinoHechosControles"
+				"     )) ~> sink1"
 			]
 		}
 	}

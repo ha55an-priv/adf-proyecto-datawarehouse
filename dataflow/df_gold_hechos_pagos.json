@@ -13,13 +13,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
-				},
-				{
-					"dataset": {
-						"referenceName": "oro_Dim_Persona",
-						"type": "DatasetReference"
-					},
-					"name": "source2"
 				}
 			],
 			"sinks": [
@@ -33,7 +26,10 @@
 			],
 			"transformations": [
 				{
-					"name": "lookup1"
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -51,25 +47,24 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
-				"source(output(",
-				"          persona_key as integer,",
-				"          ci_persona as string,",
-				"          nombre as string,",
-				"          primer_apellido as string,",
-				"          segundo_apellido as string,",
-				"          fecha_nacimiento as date,",
-				"          genero as string,",
-				"          estado_civil as string",
+				"source1 derive(programa = 'BJA',",
+				"          fecha_pago = toInteger(toString(fecha_pago, 'yyyyMMdd')),",
+				"          cantidad_pago = 1) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          pago_id,",
+				"          ci_beneficiaria,",
+				"          concepto_pago,",
+				"          monto_bs,",
+				"          fecha_pago,",
+				"          estado_pago,",
+				"          canal_pago,",
+				"          nro_comprobante,",
+				"          programa,",
+				"          cantidad_pago",
 				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source2",
-				"source1, source2 lookup(ci_beneficiaria == ci_persona,",
-				"     multiple: false,",
-				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup1",
-				"lookup1 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          pago_id as string,",
@@ -82,15 +77,13 @@
 				"     insertable:true,",
 				"     updateable:false,",
 				"     upsertable:false,",
+				"     truncate:true,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          pago_id,",
-				"          persona_key,",
-				"          fecha_key = fecha_pago,",
-				"          monto_pago_bs = monto_bs,",
 				"          estado_pago",
 				"     )) ~> sink1"
 			]

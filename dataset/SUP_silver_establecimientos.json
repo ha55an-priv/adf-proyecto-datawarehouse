@@ -16,7 +16,19 @@
 				"type": "varchar"
 			},
 			{
-				"name": "nombre_establecimiento",
+				"name": "codigo_snis",
+				"type": "varchar"
+			},
+			{
+				"name": "nombre",
+				"type": "varchar"
+			},
+			{
+				"name": "tipo",
+				"type": "varchar"
+			},
+			{
+				"name": "nivel_atencion",
 				"type": "varchar"
 			},
 			{
@@ -29,6 +41,10 @@
 			},
 			{
 				"name": "red_salud",
+				"type": "varchar"
+			},
+			{
+				"name": "estado",
 				"type": "varchar"
 			}
 		],
