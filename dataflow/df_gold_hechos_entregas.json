@@ -12,28 +12,42 @@
 						"referenceName": "SUP_silver_entregas",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "importarDatosDeSUPsilverEntregas"
+				},
+				{
+					"dataset": {
+						"referenceName": "SUP_silver_boletas",
+						"type": "DatasetReference"
+					},
+					"name": "importarDatosDeSupSilverBoletas"
+				},
+				{
+					"dataset": {
+						"referenceName": "SUP_silver_catalogo_paquetes",
+						"type": "DatasetReference"
+					},
+					"name": "ImportarDatosDeSUPsilveCatalogoPaquetes"
 				},
 				{
 					"dataset": {
 						"referenceName": "oro_Dim_Persona",
 						"type": "DatasetReference"
 					},
-					"name": "source2"
+					"name": "OroDimPersona"
 				},
 				{
 					"dataset": {
 						"referenceName": "oro_Dim_Establecimiento",
 						"type": "DatasetReference"
 					},
-					"name": "source3"
+					"name": "OroDimEstablecimiento"
 				},
 				{
 					"dataset": {
 						"referenceName": "oro_Dim_Paquete",
 						"type": "DatasetReference"
 					},
-					"name": "source4"
+					"name": "source1"
 				}
 			],
 			"sinks": [
@@ -47,13 +61,25 @@
 			],
 			"transformations": [
 				{
-					"name": "lookup1"
+					"name": "derivedColumn1"
 				},
 				{
-					"name": "lookup2"
+					"name": "select1"
 				},
 				{
-					"name": "lookup3"
+					"name": "join1"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "join3"
+				},
+				{
+					"name": "join4"
+				},
+				{
+					"name": "join5"
 				}
 			],
 			"scriptLines": [
@@ -72,21 +98,51 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1",
+				"     format: 'table') ~> importarDatosDeSUPsilverEntregas",
 				"source(output(",
-				"          persona_key as integer,",
-				"          ci_persona as string,",
-				"          nombre as string,",
-				"          primer_apellido as string,",
-				"          segundo_apellido as string,",
-				"          fecha_nacimiento as date,",
-				"          genero as string,",
-				"          estado_civil as string",
+				"          boleta_id as string,",
+				"          control_id as string,",
+				"          ci_beneficiaria as string,",
+				"          nro_boleta as string,",
+				"          fecha_emision as date,",
+				"          estado as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source2",
+				"     format: 'table') ~> importarDatosDeSupSilverBoletas",
+				"source(output(",
+				"          paquete_id as string,",
+				"          nombre_paquete as string,",
+				"          contenido_detalle as string,",
+				"          costo_estimado_bs as decimal(18,2)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ImportarDatosDeSUPsilveCatalogoPaquetes",
+				"source(output(",
+				"          id as integer,",
+				"          ci as string,",
+				"          nombres as string,",
+				"          apellido_paterno as string,",
+				"          apellido_materno as string,",
+				"          fecha_nacimiento as date,",
+				"          genero as string,",
+				"          estado_civil as string,",
+				"          ci_conyuge as string,",
+				"          numero_hijos as integer,",
+				"          ci_padre as string,",
+				"          ci_madre as string,",
+				"          profesion as string,",
+				"          nivel_estudios as string,",
+				"          municipio_residencia as string,",
+				"          fecha_emision as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> OroDimPersona",
 				"source(output(",
 				"          establecimiento_key as integer,",
 				"          establecimiento_id as string,",
@@ -102,7 +158,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source3",
+				"     format: 'table') ~> OroDimEstablecimiento",
 				"source(output(",
 				"          paquete_key as integer,",
 				"          paquete_id as string,",
@@ -114,20 +170,49 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source4",
-				"source1, source2 lookup(ci_beneficiaria == ci_persona,",
-				"     multiple: false,",
-				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup1",
-				"lookup1, source3 lookup(source1@establecimiento_id == source3@establecimiento_id,",
-				"     multiple: false,",
-				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup2",
-				"lookup2, source4 lookup(source1@paquete_id == source4@paquete_id,",
-				"     multiple: false,",
-				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup3",
-				"lookup3 sink(allowSchemaDrift: true,",
+				"     format: 'table') ~> source1",
+				"join5 derive(programa = 'SUP',",
+				"          fecha_key = toInteger(toString(importarDatosDeSUPsilverEntregas@fecha_entrega, 'yyyyMMdd')),",
+				"          cantidad_entrega = 1) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          entrega_id,",
+				"          boleta_id = importarDatosDeSUPsilverEntregas@boleta_id,",
+				"          fecha_proxima_entrega,",
+				"          persona_key = id,",
+				"          establecimiento_key,",
+				"          paquete_key,",
+				"          lote_produccion,",
+				"          peso_paquete_kg,",
+				"          fecha_key = fecha_entrega",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"importarDatosDeSUPsilverEntregas, importarDatosDeSupSilverBoletas join(importarDatosDeSUPsilverEntregas@boleta_id == importarDatosDeSupSilverBoletas@boleta_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1, ImportarDatosDeSUPsilveCatalogoPaquetes join(importarDatosDeSUPsilverEntregas@paquete_id == ImportarDatosDeSUPsilveCatalogoPaquetes@paquete_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"join2, OroDimPersona join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join3",
+				"join3, OroDimEstablecimiento join(importarDatosDeSUPsilverEntregas@establecimiento_id == OroDimEstablecimiento@establecimiento_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join4",
+				"join4, source1 join(paquete_nombre == ERROR_FUNCTION(''),",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join5",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          entrega_id as string,",
@@ -155,7 +240,7 @@
 				"          persona_key,",
 				"          establecimiento_key,",
 				"          paquete_key,",
-				"          fecha_key = fecha_entrega,",
+				"          fecha_key,",
 				"          lote_produccion,",
 				"          peso_paquete_kg,",
 				"          fecha_proxima_entrega",

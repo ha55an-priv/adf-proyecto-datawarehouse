@@ -12,24 +12,24 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "persona_key",
+				"name": "id",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "ci_persona",
+				"name": "ci",
 				"type": "varchar"
 			},
 			{
-				"name": "nombre",
+				"name": "nombres",
 				"type": "varchar"
 			},
 			{
-				"name": "primer_apellido",
+				"name": "apellido_paterno",
 				"type": "varchar"
 			},
 			{
-				"name": "segundo_apellido",
+				"name": "apellido_materno",
 				"type": "varchar"
 			},
 			{
@@ -43,6 +43,39 @@
 			{
 				"name": "estado_civil",
 				"type": "varchar"
+			},
+			{
+				"name": "ci_conyuge",
+				"type": "varchar"
+			},
+			{
+				"name": "numero_hijos",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ci_padre",
+				"type": "varchar"
+			},
+			{
+				"name": "ci_madre",
+				"type": "varchar"
+			},
+			{
+				"name": "profesion",
+				"type": "varchar"
+			},
+			{
+				"name": "nivel_estudios",
+				"type": "varchar"
+			},
+			{
+				"name": "municipio_residencia",
+				"type": "varchar"
+			},
+			{
+				"name": "fecha_emision",
+				"type": "date"
 			}
 		],
 		"typeProperties": {
